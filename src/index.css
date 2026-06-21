@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --color-impulso-dark: #0b132b;
+  --color-impulso-navy: #0A1931;
+  --color-impulso-orange: #FF7A00;
+  --color-impulso-mineral: #11141a;
+  
+  --font-outfit: 'outfit-c', sans-serif;
+  --font-raleway: 'raleway-c', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: #fafafa;
+  font-family: 'raleway-c', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Optimización para que GSAP mueva los elementos sin parpadeos */
+.parallax-item {
+  will-change: transform;
+}
