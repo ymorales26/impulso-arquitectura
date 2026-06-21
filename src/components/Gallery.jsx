@@ -2,20 +2,20 @@
 import { useState, useEffect, useRef } from "react";
 
 const CATEGORIAS = [
-  { id: "todos", label: "Todos los Proyectos", count: "05", icon: "fa-cubes" },
+  { id: "todos", label: "Todos los Proyectos", count: "09", icon: "fa-cubes" },
   {
     id: "residencial",
     label: "Residencial Urbano",
-    count: "01",
+    count: "06",
     icon: "fa-building",
   },
   {
     id: "comerciales",
     label: "Locales Comerciales",
-    count: "02",
+    count: "01",
     icon: "fa-store",
   },
-  { id: "lotes", label: "Lotes & Terrenos", count: "01", icon: "fa-map" },
+  { id: "lotes", label: "Lotes & Terrenos", count: "02", icon: "fa-map" },
   {
     id: "conceptos",
     label: "Conceptos Modernos",
@@ -27,58 +27,154 @@ const CATEGORIAS = [
 const PROYECTOS = [
   {
     id: 1,
-    slug: "residencial-terrazas",
-    title: "Residencial Terrazas",
+    slug: "torre-leguia",
+    title: "Torre Leguía",
     category: "residencial",
     categoryLabel: "Residencial Urbano",
-    img: "https://images.pexels.com/photos/27797720/pexels-photo-27797720.jpeg",
-    desc: "Innovación aplicada a obras estructurales complejas con control eficiente de recursos.",
-    area: "168 m²",
-    ano: "2024",
-  },
-  {
-    id: 2,
-    slug: "centro-corporativo-alfa",
-    title: "Centro Corporativo Alfa",
-    category: "comerciales",
-    categoryLabel: "Locales Comerciales",
-    img: "https://images.pexels.com/photos/13012592/pexels-photo-13012592.jpeg",
-    desc: "Diseño de vanguardia arquitectónica enfocado en la sustentabilidad urbana e ingeniería antisísmica.",
-    area: "2,450 m²",
+    img: "img/proyectos/torre-leguia.webp",
+    desc: "Ubicado estratégicamente en Huaraz, este desarrollo cuenta con acabados de primera y una arquitectura moderna que aprovecha cada espacio.",
+    area: "59.55 m²",
     ano: "2025",
+    alcance: "Ingeniería y Construcción",
+    estado: "En Proceso",
+    ciudad: "Huaraz",
+    direccion: "Intersección de Jr. Pomabamba con Augusto B. Leguía",
   },
+    {
+    id: 2,
+    slug: "trivio",
+    title: "Trivio",
+    category: "residencial",
+    categoryLabel: "Residencial Urbano",
+    img: "img/proyectos/trivio.webp",
+    desc: "Gracias a su diseño con tres fachadas, cada espacio recibe iluminación natural de manera excepcional, ofreciendo ambientes cálidos. Un proyecto pensado en el bienestar diario de sus recidentes.",
+    area: "82.60 m²",
+    ano: "2025",
+    alcance: "Habilitación Urbana",
+    estado: "En Proceso",
+    ciudad: "Arequipa",
+    direccion: "Av. Villa Hermosa 212, Espaldas del Real Plaza",
+  },
+
   {
     id: 3,
-    slug: "complejo-industrial-norte",
-    title: "Complejo Industrial Norte",
-    category: "conceptos",
-    categoryLabel: "Conceptos (Unbuilt)",
-    img: "https://images.pexels.com/photos/8746219/pexels-photo-8746219.jpeg",
-    desc: "Optimización de naves industriales de gran luz utilizando sistemas estructurales de acero.",
-    area: "5,800 m²",
-    ano: "2026",
+    slug: "plaza27",
+    title: "Plaza 27",
+    category: "residencial",
+    categoryLabel: "Residencial Urbano",
+    img: "img/proyectos/plaza27.webp",
+    desc: "Un edificio de departamentos ubicado en el centro de Huaraz, a un paso de todo lo que necesitas, un punto estratégico a pocas cuadras de la Plaza de Armas y rodeado de parques y centros educativos.",
+    area: "75.70 m²",
+    ano: "2024",
+    alcance: "Modelamiento Estructural",
+    estado: "Terminado",
+    ciudad: "Huaraz",
+    direccion: "Pasaje Octavio Hinostroza con Av. 27 de Noviembre",
   },
   {
     id: 4,
-    slug: "condominio-el-mirador",
-    title: "Condominio El Mirador",
-    category: "lotes",
-    categoryLabel: "Lotes",
-    img: "https://images.pexels.com/photos/27797720/pexels-photo-27797720.jpeg",
-    desc: "Complejo residencial planificado bajo rigurosos estándares de seguridad estructural.",
-    area: "12,000 m²",
+    slug: "eleven",
+    title: "Eleven",
+    category: "residencial",
+    categoryLabel: "Residencial Urbano",
+    img: "img/proyectos/eleven.webp",
+    desc: "Eleven es un exclusivo proyecto de tan solo 11 departamentos para vivir con tranquilidad, comodidad y seguridad. Ubicado a una cuadra de Plaza San Miguel, frente a la Universidad Católica (PUCP).",
+    area: "65.15 m²",
+    ano: "2026",
+    alcance: "Ingeniería y Construcción",
+    estado: "En Proceso",
+    ciudad: "Huaraz",
+    direccion: "Calle Universitaria 1200, San Miguel - Frente a la PUCP",
+  },
+    {
+    id: 5,
+    slug: "aflora",
+    title: "Aflora",
+    category: "residencial",
+    categoryLabel: "Residencial Urbano",
+    img: "img/proyectos/aflora.webp",
+    desc: "El proyecto AFLORA es un edificio único, rodeado por más de 7 parques y muy bien ubicado, cerca de todo lo que necesitas. AFLORA contará Área de parrillas exclusiva para sus propietarios; además, todos los departamentos contarán con acabados excepcionales.",
+    area: "127.60 m²",
+    ano: "2024",
+    alcance: "Ingeniería y Construcción",
+    estado: "Terminado",
+    ciudad: "Arequipa",
+    direccion: "Av. San Martín 123, Miraflores",
+  },
+      {
+    id: 6,
+    slug: "oasiz",
+    title: "Oasiz",
+    category: "residencial",
+    categoryLabel: "Residencial Urbano",
+    img: "img/proyectos/oasiz.webp",
+    desc: " Ubicado en un punto bastante estratégico rodeado de colegios, clínicas y restaurantes. Con vistas hacia el paisaje natural y la ciudad.",
+    area: "127.60 m²",
     ano: "2023",
+    alcance: "Ingeniería y Construcción",
+    estado: "Terminado",
+    ciudad: "Huaraz",
+    direccion: "Jr. Pablo Patrón 574. Sector Los Ángeles (Ex piscina Master Pool)",
   },
   {
-    id: 5,
-    slug: "plaza-comercial-moderna",
-    title: "Plaza Comercial Moderna",
+    id: 7,
+    slug: "palmira",
+    title: "Plaza Comercial Palmira",
     category: "comerciales",
     categoryLabel: "Locales Comerciales",
-    img: "https://images.pexels.com/photos/20432865/pexels-photo-20432865.jpeg",
-    desc: "Espacios comerciales modernos que integran estética vanguardista con máxima funcionalidad.",
+    img: "img/proyectos/palmira.webp",
+    desc: "Somos la 1° Plaza Comercial de Huaraz que contará con más de 120 puestos, con distintos rubros comerciales.",
     area: "980 m²",
     ano: "2024",
+    alcance: "Arquitectura e Ingeniería",
+    estado: "Terminado",
+    ciudad: "Huaraz",
+    direccion: "Palmira Baja - A una cuadra del cruce Palmira",
+  },
+    {
+    id: 8,
+    slug: "san-felipe",
+    title: "San Felipe",
+    category: "lotes",
+    categoryLabel: "Lotes & Terrenos",
+    img: "img/proyectos/san-felipe.webp",
+    desc: "La nueva Urbanización San Felipe estratégicamente ubicada, frente al condominio El Pinar y al costado del nuevo campus de la Universidad César Vallejo.",
+    area: "1200 m²",
+    ano: "2023",
+    alcance: "Habilitación Urbana",
+    estado: "Terminado",
+    ciudad: "Huaraz",
+    direccion: "A 5 minutos de Huaraz y Al costado del nuevo Campus de la UCV",
+  },
+      {
+    id: 9,
+    slug: "arboleda",
+    title: "Arboleda",
+    category: "lotes",
+    categoryLabel: "Lotes & Terrenos",
+    img: "img/proyectos/arboleda.webp",
+    desc: "La nueva Urbanización Arboleda estratégicamente ubicada.",
+    area: "1200 m²",
+    ano: "2024",
+    alcance: "Habilitación Urbana",
+    estado: "En Proceso",
+    ciudad: "Huaraz",
+    direccion: "Carretera a Rivas - Marian, a 5 minutos del nuevo Mall de Huaraz",
+  },
+  {
+    id: 10,
+    slug: "nexus",
+    title: "Nexus",
+    category: "conceptos",
+    categoryLabel: "Conceptos",
+    img: "img/proyectos/nexus.webp",
+    desc: "Ofrecemos terrenos con alto valor logístico, acceso privilegiado y proyección de desarrollo, ideales para inversión o expansión empresarial.",
+    area: "1200 m²",
+    ano: "2024",
+    alcance: "Lotes Industriales",
+    estado: "En Proceso",
+    ciudad: "Chiclayo",
+    direccion: "Au. Panamericana N 14160, Mórrope 14000",
   },
 ];
 
@@ -91,7 +187,9 @@ export default function Gallery({ onVerProyecto }) {
   );
 
   useEffect(() => {
-    const rows = containerRef.current.querySelectorAll(".proyecto-row");
+    const rows = containerRef.current?.querySelectorAll(".proyecto-row");
+    if (!rows) return;
+
     const observerOptions = {
       root: null,
       rootMargin: "-5% 0px -5% 0px",
@@ -101,16 +199,8 @@ export default function Gallery({ onVerProyecto }) {
     const rowObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add(
-            "opacity-100",
-            "translate-y-0",
-            "scale-100",
-          );
-          entry.target.classList.remove(
-            "opacity-0",
-            "translate-y-12",
-            "scale-95",
-          );
+          entry.target.classList.add("opacity-100", "translate-y-0", "scale-100");
+          entry.target.classList.remove("opacity-0", "translate-y-12", "scale-95");
         }
       });
     }, observerOptions);
@@ -121,11 +211,9 @@ export default function Gallery({ onVerProyecto }) {
 
   return (
     <div className="bg-white text-gray-900 w-full overflow-hidden relative">
-      <section
-        id="proyectos"
-        className="py-24 max-w-[1300px] mx-auto px-6 md:px-12 lg:px-16"
-      >
-        {/* ENCABEZADO DE LA SECCIÓN */}
+      <section id="proyectos" className="py-24 max-w-[1300px] mx-auto px-6 md:px-12 lg:px-16">
+        
+        {/* ENCABEZADO */}
         <div className="mb-14 text-center md:text-left">
           <span className="text-xs font-bold text-impulso-orange tracking-widest uppercase font-outfit block mb-3">
             NUESTRO PORTAFOLIO
@@ -136,41 +224,54 @@ export default function Gallery({ onVerProyecto }) {
           <div className="w-20 h-1 bg-impulso-orange mt-4 mx-auto md:mx-0"></div>
         </div>
 
-        {/* 💻 CONSOLA DE FILTROS SUPERIOR */}
-        <div className="hidden lg:flex items-center justify-between bg-gray-50/90 backdrop-blur-md p-3 rounded-2xl border border-gray-100 shadow-[0_10px_30px_rgba(0,0,0,0.02)] mb-24 gap-3 w-full">
-          {CATEGORIAS.map((cat) => {
-            const esActivo = categoriaActiva === cat.id;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => setCategoriaActiva(cat.id)}
-                className={`flex-1 flex items-center justify-center gap-3 p-3.5 rounded-xl transition-all duration-300 group cursor-pointer border ${
-                  esActivo
-                    ? "bg-[#02184c] border-[#02184c] text-white shadow-lg shadow-[#02184c]/20"
-                    : "bg-white border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-200 hover:shadow-sm"
-                }`}
-              >
-                <i
-                  className={`fa-solid ${cat.icon} text-sm transition-colors ${esActivo ? "text-white" : "text-gray-400 group-hover:text-impulso-orange"}`}
-                ></i>
-                <span className="font-raleway text-xs font-bold uppercase tracking-wider whitespace-nowrap">
-                  {cat.label}
-                </span>
-                <span
-                  className={`font-outfit text-[10px] font-bold px-1.5 py-0.5 rounded transition-colors ${esActivo ? "bg-white/20 text-white" : "bg-gray-100 text-gray-400 group-hover:bg-gray-200"}`}
-                >
-                  {cat.count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* CONTENEDOR DE PROYECTOS FILTRADOS */}
-        <div
-          ref={containerRef}
-          className="flex flex-col gap-24 md:gap-32 min-h-[600px] w-full"
+        {/* FILTROS (DESKTOP) */}
+{/* 💻 CONSOLA DE FILTROS SUPERIOR (REDISEÑO PREMIUM PARA WEB) */}
+<div className="hidden lg:flex justify-center mb-20 w-full">
+  <div className="inline-flex items-center bg-gray-50/80 backdrop-blur-md p-2 rounded-2xl border border-gray-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.01)] gap-1.5 relative">
+    {CATEGORIAS.map((cat) => {
+      const esActivo = categoriaActiva === cat.id;
+      return (
+        <button
+          key={cat.id}
+          onClick={() => setCategoriaActiva(cat.id)}
+          className={`flex items-center gap-2.5 px-5 py-3 rounded-xl transition-all duration-300 relative group cursor-pointer font-outfit text-xs font-bold uppercase tracking-wider ${
+            esActivo
+              ? "bg-[#02184c] text-white shadow-md shadow-[#02184c]/10 scale-[1.02]"
+              : "text-gray-500 hover:text-[#02184c] hover:bg-gray-200/50"
+          }`}
         >
+          {/* Icono animado */}
+          <i
+            className={`fa-solid ${cat.icon} text-sm transition-transform duration-300 ${
+              esActivo 
+                ? "text-impulso-orange scale-110" 
+                : "text-gray-400 group-hover:scale-110 group-hover:text-impulso-orange"
+            }`}
+          ></i>
+
+          {/* Etiqueta */}
+          <span className="font-medium font-raleway tracking-wide transition-colors">
+            {cat.label}
+          </span>
+
+          {/* Contador Estilo Notificación Minimalista */}
+          <span
+            className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full font-outfit transition-all duration-300 ${
+              esActivo
+                ? "bg-white/15 text-white"
+                : "bg-gray-200/70 text-gray-400 group-hover:bg-impulso-orange/10 group-hover:text-impulso-orange"
+            }`}
+          >
+            {cat.count}
+          </span>
+        </button>
+      );
+    })}
+  </div>
+</div>
+
+        {/* PROYECTOS */}
+        <div ref={containerRef} className="flex flex-col gap-24 md:gap-32 min-h-[600px] w-full">
           {proyectosFiltrados.map((proj, idx) => {
             const esInvertido = idx % 2 !== 0;
 
@@ -181,9 +282,15 @@ export default function Gallery({ onVerProyecto }) {
                   esInvertido ? "md:flex-row-reverse" : ""
                 }`}
               >
-                {/* 📸 IMAGEN */}
-                <div className="w-full md:w-[60%] h-[300px] sm:h-[400px] md:h-[500px] overflow-hidden shadow-xl relative group border border-gray-100">
+                {/* 📸 IMAGEN + CIUDAD */}
+                <div className="w-full md:w-[60%] h-[300px] sm:h-[400px] md:h-[500px] overflow-hidden shadow-xl relative group border border-gray-100 rounded-xl md:rounded-none">
                   <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500 z-10" />
+                  
+                  <div className="absolute top-4 right-4 z-20 bg-black/60 backdrop-blur-md text-white font-outfit text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-lg border border-white/10 shadow-md flex items-center gap-1.5">
+                    <i className="fa-solid fa-location-dot text-impulso-orange"></i>
+                    <span>{proj.ciudad}</span>
+                  </div>
+
                   <img
                     src={proj.img}
                     alt={proj.title}
@@ -191,7 +298,7 @@ export default function Gallery({ onVerProyecto }) {
                   />
                 </div>
 
-                {/* 📑 TARJETA FLOTANTE */}
+                {/* 📑 TARJETA INFO */}
                 <div
                   className={`w-[92%] md:w-[45%] bg-white p-8 md:p-10 lg:p-12 shadow-[0_30px_60px_rgba(0,0,0,0.12)] border border-gray-100 rounded-xl z-20 -mt-12 md:mt-0 flex flex-col items-start ${
                     esInvertido
@@ -211,52 +318,62 @@ export default function Gallery({ onVerProyecto }) {
                     {proj.desc}
                   </p>
 
-                  {/* 📊 GRID COMPACTO DE 4 DATOS CON ICONOS DE FONT AWESOME */}
+                  {/* 📊 GRID DE 4 DATOS (2 COLUMNAS) */}
                   <div className="grid grid-cols-2 gap-x-6 gap-y-4 mt-6 pt-6 border-t border-gray-100 w-full">
+                    
+                    {/* ALCANCE */}
                     <div className="flex items-start gap-2.5">
                       <i className="fa-solid fa-briefcase text-impulso-orange text-xs mt-1"></i>
                       <div>
-                        <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">
-                          Alcance
-                        </p>
-                        <p className="text-xs font-bold text-gray-700 font-outfit mt-0.5">
-                          Ingeniería y Construcción
-                        </p>
+                        <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">Alcance</p>
+                        <p className="text-xs font-bold text-gray-700 font-outfit mt-0.5 leading-snug">{proj.alcance}</p>
                       </div>
                     </div>
+
+                    {/* ESTADO */}
                     <div className="flex items-start gap-2.5">
                       <i className="fa-solid fa-circle-check text-impulso-orange text-xs mt-1"></i>
                       <div>
-                        <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">
-                          Estado
-                        </p>
-                        <p className="text-xs font-bold text-gray-700 font-outfit mt-0.5">
-                          Ejecutado con Éxito
-                        </p>
+                        <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">Estado</p>
+                        <p className={`text-xs font-bold font-outfit mt-0.5 px-2 py-0.5 rounded inline-block ${
+                          proj.estado.toLowerCase() === "terminado" 
+                            ? "bg-green-50 text-green-700 border border-green-100" 
+                            : proj.estado.toLowerCase() === "en proceso"
+                            ? "bg-amber-50 text-amber-700 border border-amber-100"
+                            : "bg-blue-50 text-blue-700 border border-blue-100"
+                        }`}>{proj.estado}</p>
                       </div>
                     </div>
+
+                    {/* ÁREA */}
                     <div className="flex items-start gap-2.5">
                       <i className="fa-solid fa-maximize text-impulso-orange text-xs mt-1"></i>
                       <div>
-                        <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">
-                          Área
-                        </p>
-                        <p className="text-xs font-bold text-gray-700 font-outfit mt-0.5">
-                          {proj.area}
-                        </p>
+                        <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">Área</p>
+                        <p className="text-xs font-bold text-gray-700 font-outfit mt-0.5">{proj.area}</p>
                       </div>
                     </div>
+
+                    {/* AÑO (Vuelve a su sitio) */}
                     <div className="flex items-start gap-2.5">
                       <i className="fa-solid fa-calendar-days text-impulso-orange text-xs mt-1"></i>
                       <div>
-                        <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">
-                          Año
-                        </p>
-                        <p className="text-xs font-bold text-gray-700 font-outfit mt-0.5">
-                          {proj.ano}
+                        <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">Año</p>
+                        <p className="text-xs font-bold text-gray-700 font-outfit mt-0.5">{proj.ano}</p>
+                      </div>
+                    </div>
+
+                    {/* ✨ DIRECCIÓN TOTALMENTE EXPANSIBLE (Ocupa las 2 columnas abajo) */}
+                    <div className="col-span-2 flex items-start gap-2.5 pt-2 border-t border-gray-50 mt-1">
+                      <i className="fa-solid fa-map-pin text-impulso-orange text-xs mt-1"></i>
+                      <div className="w-full">
+                        <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">Dirección</p>
+                        <p className="text-xs font-bold text-gray-700 font-outfit mt-0.5 leading-relaxed break-words">
+                          {proj.direccion}
                         </p>
                       </div>
                     </div>
+
                   </div>
 
                   <button
@@ -281,7 +398,7 @@ export default function Gallery({ onVerProyecto }) {
         </div>
       </section>
 
-      {/* 📱 DOCK FLOTANTE INFERIOR MÓVIL */}
+      {/* DOCK FLOTANTE MÓVIL */}
       <div className="lg:hidden fixed bottom-6 right-4 sm:right-6 w-[72%] max-w-[300px] bg-[#02184c]/95 backdrop-blur-lg border border-white/20 p-2 rounded-2xl shadow-[0_20px_50px_rgba(2,24,76,0.3)] z-50 flex justify-between items-center">
         {CATEGORIAS.map((cat) => {
           const esActivo = categoriaActiva === cat.id;
