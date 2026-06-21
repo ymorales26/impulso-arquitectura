@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import react from '@vitejs/plugin-react' // O el plugin de react que tengas instalado
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: '/impulso-arquitectura/', // <--- AGREGA ESTA LÍNEA EXACTA CON LAS BARRAS
 })
