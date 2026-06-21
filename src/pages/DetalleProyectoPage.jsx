@@ -4,14 +4,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Mousewheel, EffectFade } from 'swiper/modules';
 import { useParams } from 'react-router-dom';
 
-import SidebarConcepto from '../components/de-proyecto/SidebarConcepto';
-
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 
-// 🗄️ Base de datos detallada de cada proyecto
+// 🗄️ Base de datos indexada por SLUGS en lugar de números
 const DETALLES_PROYECTOS = {
-  1: {
+  "residencial-terrazas": {
     nombre: "Residencial Terrazas",
     ubicacionCorta: "Huaraz, Ancash",
     conceptoText: "Este proyecto fusiona la robustez de la ingeniería estructural antisísmica con un diseño arquitectónico minimalista que aprovecha al máximo la iluminación natural y la topografía de Huaraz.",
@@ -20,14 +18,14 @@ const DETALLES_PROYECTOS = {
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
     ],
     planoImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=80", 
-    mapaUrl: "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15715.176214371424!2d-77.528912!3d-9.530368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2spe!4v1710000000000!5m2!1ses-419!2spe", // Reemplazar con iframe src real
+    mapaUrl: "https://maps.google.com/maps?q=Huaraz&t=&z=13&ie=UTF8&iwloc=&output=embed", 
     fotosGaleria: [
       "https://images.pexels.com/photos/27797720/pexels-photo-27797720.jpeg",
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"
     ]
   },
-  2: {
+  "centro-corporativo-alfa": {
     nombre: "Centro Corporativo Alfa",
     ubicacionCorta: "Lima, Perú",
     conceptoText: "Un hito de vanguardia arquitectónica enfocado en la sustentabilidad urbana, optimizando áreas de oficinas con plantas libres y vidrios de alto rendimiento térmico.",
@@ -36,13 +34,13 @@ const DETALLES_PROYECTOS = {
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"
     ],
     planoImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=80",
-    mapaUrl: "",
+    mapaUrl: "https://maps.google.com/maps?q=Lima&t=&z=13&ie=UTF8&iwloc=&output=embed",
     fotosGaleria: [
       "https://images.pexels.com/photos/13012592/pexels-photo-13012592.jpeg",
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
     ]
   },
-  3: {
+  "complejo-industrial-norte": {
     nombre: "Complejo Industrial Norte",
     ubicacionCorta: "Chimbote, Ancash",
     conceptoText: "Planificación modular de alta eficiencia para naves industriales de gran luz, implementando tijerales de acero estructural calculados para cargas dinámicas severas.",
@@ -50,12 +48,12 @@ const DETALLES_PROYECTOS = {
       "https://images.pexels.com/photos/8746219/pexels-photo-8746219.jpeg"
     ],
     planoImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=80",
-    mapaUrl: "",
+    mapaUrl: "https://maps.google.com/maps?q=Chimbote&t=&z=13&ie=UTF8&iwloc=&output=embed",
     fotosGaleria: [
       "https://images.pexels.com/photos/8746219/pexels-photo-8746219.jpeg"
     ]
   },
-  4: {
+  "condominio-el-mirador": {
     nombre: "Condominio El Mirador",
     ubicacionCorta: "Caraz, Ancash",
     conceptoText: "Estructuras residenciales perfectamente integradas al paisaje montañoso, cimentadas bajo rigurosos estudios geotécnicos para garantizar estabilidad absoluta.",
@@ -63,12 +61,12 @@ const DETALLES_PROYECTOS = {
       "https://images.pexels.com/photos/27797720/pexels-photo-27797720.jpeg"
     ],
     planoImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=80",
-    mapaUrl: "",
+    mapaUrl: "https://maps.google.com/maps?q=Caraz&t=&z=13&ie=UTF8&iwloc=&output=embed",
     fotosGaleria: [
       "https://images.pexels.com/photos/27797720/pexels-photo-27797720.jpeg"
     ]
   },
-  5: {
+  "plaza-comercial-moderna": {
     nombre: "Plaza Comercial Moderna",
     ubicacionCorta: "Huaraz, Ancash",
     conceptoText: "Espacio comercial de distribución fluida que combina pórticos de concreto armado con fachadas flotantes de aluminio, generando una experiencia urbana única.",
@@ -76,7 +74,7 @@ const DETALLES_PROYECTOS = {
       "https://images.pexels.com/photos/20432865/pexels-photo-20432865.jpeg"
     ],
     planoImg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=80",
-    mapaUrl: "",
+    mapaUrl: "https://maps.google.com/maps?q=Huaraz&t=&z=13&ie=UTF8&iwloc=&output=embed",
     fotosGaleria: [
       "https://images.pexels.com/photos/20432865/pexels-photo-20432865.jpeg"
     ]
@@ -84,22 +82,33 @@ const DETALLES_PROYECTOS = {
 };
 
 export default function DetalleProyectoPage({ onClose }) {
-  const { proyectoId } = useParams();
+  const { slug } = useParams();
   const [activeSidebar, setActiveSidebar] = useState(null);
-  const [activeImg, setActiveImg] = useState(null); // ESTADO PARA LA LUPA
-  const proyectoData = DETALLES_PROYECTOS[proyectoId] || DETALLES_PROYECTOS[1];
+  const [activeImg, setActiveImg] = useState(null); 
 
-  // Función reutilizable para renderizar los sidebars con el estilo del primero (Sin blur)
+  const proyectoData = DETALLES_PROYECTOS[slug] || DETALLES_PROYECTOS["residencial-terrazas"];
+
+  // 🏛️ Contenedor Dinámico unificado para TODOS los Sidebars
   const renderSidebarContainer = (id, titulo, contenido) => {
-return (
+    return (
       <>
-        <div onClick={() => setActiveSidebar(null)} className={`fixed inset-0 bg-transparent z-50 transition-opacity duration-300 ${activeSidebar === id ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} />
-        <div className={`fixed top-0 right-0 h-full w-full sm:w-[500px] md:w-[600px] bg-[#000d26] border-l border-white/10 z-50 p-6 md:p-8 flex flex-col transition-transform duration-300 ease-in-out transform ${activeSidebar === id ? 'translate-x-0' : 'translate-x-full'}`}>
-          <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
-            <h2 className="font-outfit text-xl font-bold tracking-tight text-white uppercase">{titulo}</h2>
-            <button onClick={() => setActiveSidebar(null)} className="text-gray-400 hover:text-impulso-orange text-sm font-bold uppercase tracking-widest cursor-pointer flex items-center gap-2 transition-colors">Cerrar <i className="fa-solid fa-xmark"></i></button>
+        <div 
+          onClick={() => setActiveSidebar(null)} 
+          className={`fixed inset-0 bg-transparent z-50 transition-opacity duration-300 ${activeSidebar === id ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} 
+        />
+        <div className={`fixed top-0 right-0 h-full w-full sm:w-[500px] md:w-[600px] bg-[#000d26] border-l border-white/10 z-[10000] p-6 md:p-8 flex flex-col justify-between transition-transform duration-500 ease-in-out transform ${activeSidebar === id ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div className="flex flex-col flex-1 h-full">
+            <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+              <h2 className="font-outfit text-xl font-bold tracking-tight text-white uppercase">{titulo}</h2>
+              <button onClick={() => setActiveSidebar(null)} className="text-gray-400 hover:text-impulso-orange text-sm font-bold uppercase tracking-widest cursor-pointer flex items-center gap-2 transition-colors">
+                CERRAR <i className="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto space-y-4 pr-1 scrollbar-thin">
+              {contenido}
+            </div>
           </div>
-          <div className="flex-1 overflow-y-auto space-y-4 pr-1">{contenido}</div>
+          <div className="text-[10px] text-gray-600 mt-4 pt-4 border-t border-white/5">Impulso Proyectistas e Ingenieros</div>
         </div>
       </>
     );
@@ -110,8 +119,8 @@ return (
       
       {/* LIGHTBOX QUE SE ACTIVA CON LA LUPA */}
       {activeImg && (
-        <div onClick={() => setActiveImg(null)} className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 cursor-zoom-out">
-          <img src={activeImg} className="max-w-full max-h-full object-contain rounded-lg" />
+        <div onClick={() => setActiveImg(null)} className="fixed inset-0 z-[10010] bg-black/90 flex items-center justify-center p-4 cursor-zoom-out">
+          <img src={activeImg} className="max-w-full max-h-full object-contain rounded-lg" alt="Vista ampliada" />
         </div>
       )}
 
@@ -231,16 +240,20 @@ return (
         </div>
       </div>
 
-      {/* 📑 RENDERS DE SIDEBARS */}
+      {/* 📑 RENDERS DE SIDEBARS UNIFICADOS */}
       
-      {/* 01 - Concepto de diseño */}
-      <SidebarConcepto 
-        isOpen={activeSidebar === 'concepto'} 
-        onClose={() => setActiveSidebar(null)} 
-        data={proyectoData.conceptoText} 
-      />
+      {/* 01 - Concepto de Diseño */}
+      {renderSidebarContainer(
+        'concepto',
+        'El Concepto',
+        <div className="space-y-4">
+          <p className="text-gray-300 text-sm leading-relaxed text-justify">
+            {proyectoData.conceptoText}
+          </p>
+        </div>
+      )}
 
-      {/* 02 - Planos */}
+      {/* 02 - Planos (CORREGIDO CON LIGHTBOX ZOOM) */}
       {renderSidebarContainer(
         'planos',
         'Planos y Estructuras',
@@ -248,15 +261,23 @@ return (
           <p className="text-gray-300 text-sm leading-relaxed">
             Distribución estructural y plantas técnicas validadas para este desarrollo:
           </p>
-          <div className="border border-white/10 rounded-xl overflow-hidden bg-black/40 group">
+          {/* 🔥 Agregamos el onClick, cursor-pointer y el efecto hover de lupa */}
+          <div 
+            onClick={() => setActiveImg(proyectoData.planoImg)}
+            className="border border-white/10 rounded-xl overflow-hidden bg-black/40 relative group cursor-pointer shadow-md"
+          >
             <img 
               src={proyectoData.planoImg} 
               alt="Planos del proyecto" 
               className="w-full h-auto object-contain aspect-[4/3] group-hover:scale-102 transition-transform duration-500"
             />
+            {/* Capa oscura decorativa e icono de lupa al hacer hover */}
+            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <i className="fa-solid fa-magnifying-glass-plus text-white text-base"></i>
+            </div>
           </div>
           <span className="text-[11px] text-gray-500 block text-center italic">
-            * Vista técnica en alta resolución.
+            * Vista técnica en alta resolución. Haz clic para ampliar.
           </span>
         </div>
       )}

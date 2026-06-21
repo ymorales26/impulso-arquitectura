@@ -1,6 +1,7 @@
+// src/components/Hero.jsx
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom"; // 👈 Importamos Link para enrutar al form de contacto
 
-// 1. Array optimizado con 6 tomas horizontales y enfoque de ingeniería premium
 const IMAGENES_SLIDER = [
   {
     id: 1,
@@ -22,19 +23,19 @@ const IMAGENES_SLIDER = [
   },
   {
     id: 4,
-    url: "https://images.pexels.com/photos/8746219/pexels-photo-8746219.jpeg", // Espacio para foto de dron 4
+    url: "https://images.pexels.com/photos/8746219/pexels-photo-8746219.jpeg",
     subtitle: "Infraestructura Vial",
     title: "Conectividad y Desarrollo Sostenible",
   },
   {
     id: 5,
-    url: "https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg", // Espacio para foto de dron 5
+    url: "https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg",
     subtitle: "Tecnología e Innovación",
     title: "Modelamiento BIM de Alta Complejidad",
   },
   {
     id: 6,
-    url: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg", // Espacio para foto de dron 6
+    url: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg",
     subtitle: "Sustentabilidad",
     title: "Soluciones Estructurales Eco-Eficientes",
   },
@@ -43,7 +44,6 @@ const IMAGENES_SLIDER = [
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Funciones para navegar manualmente
   const prevSlide = () => {
     setCurrentIndex((prev) =>
       prev === 0 ? IMAGENES_SLIDER.length - 1 : prev - 1,
@@ -56,7 +56,6 @@ export default function Hero() {
     );
   };
 
-  // Efecto Autoplay: Cambia la foto automáticamente cada 6 segundos
   useEffect(() => {
     const timer = setInterval(nextSlide, 6000);
     return () => clearInterval(timer);
@@ -75,31 +74,26 @@ export default function Hero() {
             <div
               key={slide.id}
               className={`absolute inset-0 w-full h-full transition-all duration-1000 ease-in-out ${
-                isActive
-                  ? "opacity-100 visible z-10"
-                  : "opacity-0 invisible z-0"
+                isActive ? "opacity-100 visible z-10" : "opacity-0 invisible z-0"
               }`}
             >
-              {/* Imagen panorámica con sutil efecto Zoom continuo */}
-              {/* Cambia brightness-[0.35] por uno mayor para aclarar la foto */}
+              {/* Imagen panorámica con efecto Zoom continuo */}
               <div
-                className={`absolute inset-0 w-full h-full bg-cover bg-center brightness-[0.48] transition-transform duration-[6000ms] ease-out ${
+                className={`absolute inset-0 w-full h-full bg-cover bg-center brightness-[0.40] transition-transform duration-[6000ms] ease-out ${
                   isActive ? "scale-105" : "scale-100"
                 }`}
                 style={{ backgroundImage: `url('${slide.url}')` }}
               />
 
               {/* Capa de degradado sutil inferior para legibilidad */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 z-10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 z-10" />
 
               {/* TEXTOS ANIMADOS */}
               <div className="absolute inset-0 flex items-center justify-start z-20">
                 <div className="container mx-auto px-6 md:px-[7vw]">
                   <div
                     className={`max-w-3xl transition-all duration-1000 delay-300 transform ${
-                      isActive
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-10"
+                      isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                     }`}
                   >
                     <span className="font-outfit text-sm md:text-base font-bold text-impulso-orange tracking-[4px] uppercase block mb-3">
@@ -111,10 +105,35 @@ export default function Hero() {
                         {slide.title.split(" ").slice(1).join(" ")}
                       </span>
                     </h1>
-                    <p className="font-raleway text-gray-300 mt-6 text-base md:text-lg max-w-xl leading-relaxed">
-                      Soluciones integrales de construcción con altos estándares
-                      técnicos e ingeniería de precisión.
+
+                    {/* 📝 NUEVA DESCRIPCIÓN ENFOCADA EN HUARAZ Y BIM */}
+                    <p className="font-raleway text-gray-200 mt-5 text-sm md:text-base max-w-2xl leading-relaxed font-medium">
+                      Diseñamos y construimos tu proyecto en Huaraz con metodología BIM, planificación técnica y presupuesto claro desde el inicio.
                     </p>
+
+                    {/* 📊 CONTENEDOR DE ICONOS TÉCNICOS DESTACADOS */}
+                    <div className="flex flex-wrap gap-x-6 gap-y-3 mt-6 text-white font-outfit text-xs md:text-sm font-bold tracking-wide">
+                      <div className="flex items-center gap-2 bg-black/30 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10">
+                        <i className="fa-solid fa-circle-check text-impulso-orange"></i>
+                        <span>+50 proyectos ejecutados</span>
+                      </div>
+                      <div className="flex items-center gap-2 bg-black/30 backdrop-blur-sm px-3.5 py-1.5 rounded-lg border border-white/10">
+                        <i className="fa-solid fa-graduation-cap text-impulso-orange"></i>
+                        <span>Metodología BIM certificada</span>
+                      </div>
+                    </div>
+
+                    {/* 🎯 BOTÓN DE AGENDA LLAMATIVO (NARANJA BONITO) */}
+                    <div className="mt-8">
+                      <Link
+                        to="/contacto"
+                        className="inline-flex items-center justify-center px-7 py-3.5 bg-impulso-orange text-white font-outfit text-xs md:text-sm font-bold uppercase tracking-widest rounded-xl hover:bg-orange-600 shadow-lg shadow-impulso-orange/30 transition-all duration-300 group/btn"
+                      >
+                        Agenda una Asesoría Gratuita
+                        <i className="fa-solid fa-calendar-check ml-2.5 transform transition-transform duration-300 group-hover/btn:scale-110"></i>
+                      </Link>
+                    </div>
+
                   </div>
                 </div>
               </div>

@@ -3,56 +3,85 @@ import { useState, useEffect, useRef } from "react";
 
 const CATEGORIAS = [
   { id: "todos", label: "Todos los Proyectos", count: "05", icon: "fa-cubes" },
-  { id: "residencial", label: "Residencial Urbano", count: "02", icon: "fa-building" },
-  { id: "comerciales", label: "Locales Comerciales", count: "02", icon: "fa-store" },
+  {
+    id: "residencial",
+    label: "Residencial Urbano",
+    count: "01",
+    icon: "fa-building",
+  },
+  {
+    id: "comerciales",
+    label: "Locales Comerciales",
+    count: "02",
+    icon: "fa-store",
+  },
   { id: "lotes", label: "Lotes & Terrenos", count: "01", icon: "fa-map" },
-  { id: "conceptos", label: "Conceptos Modernos", count: "01", icon: "fa-compass-drafting" },
+  {
+    id: "conceptos",
+    label: "Conceptos Modernos",
+    count: "01",
+    icon: "fa-compass-drafting",
+  },
 ];
 
 const PROYECTOS = [
   {
     id: 1,
+    slug: "residencial-terrazas",
     title: "Residencial Terrazas",
     category: "residencial",
     categoryLabel: "Residencial Urbano",
     img: "https://images.pexels.com/photos/27797720/pexels-photo-27797720.jpeg",
     desc: "Innovación aplicada a obras estructurales complejas con control eficiente de recursos.",
+    area: "168 m²",
+    ano: "2024",
   },
   {
     id: 2,
+    slug: "centro-corporativo-alfa",
     title: "Centro Corporativo Alfa",
     category: "comerciales",
     categoryLabel: "Locales Comerciales",
     img: "https://images.pexels.com/photos/13012592/pexels-photo-13012592.jpeg",
     desc: "Diseño de vanguardia arquitectónica enfocado en la sustentabilidad urbana e ingeniería antisísmica.",
+    area: "2,450 m²",
+    ano: "2025",
   },
   {
     id: 3,
+    slug: "complejo-industrial-norte",
     title: "Complejo Industrial Norte",
     category: "conceptos",
     categoryLabel: "Conceptos (Unbuilt)",
     img: "https://images.pexels.com/photos/8746219/pexels-photo-8746219.jpeg",
     desc: "Optimización de naves industriales de gran luz utilizando sistemas estructurales de acero.",
+    area: "5,800 m²",
+    ano: "2026",
   },
   {
     id: 4,
+    slug: "condominio-el-mirador",
     title: "Condominio El Mirador",
     category: "lotes",
     categoryLabel: "Lotes",
     img: "https://images.pexels.com/photos/27797720/pexels-photo-27797720.jpeg",
     desc: "Complejo residencial planificado bajo rigurosos estándares de seguridad estructural.",
+    area: "12,000 m²",
+    ano: "2023",
   },
   {
     id: 5,
+    slug: "plaza-comercial-moderna",
     title: "Plaza Comercial Moderna",
     category: "comerciales",
     categoryLabel: "Locales Comerciales",
     img: "https://images.pexels.com/photos/20432865/pexels-photo-20432865.jpeg",
     desc: "Espacios comerciales modernos que integran estética vanguardista con máxima funcionalidad.",
+    area: "980 m²",
+    ano: "2024",
   },
 ];
 
-// 👈 Recibimos "onVerProyecto" como prop para conectarnos con App.jsx
 export default function Gallery({ onVerProyecto }) {
   const [categoriaActiva, setCategoriaActiva] = useState("todos");
   const containerRef = useRef(null);
@@ -72,8 +101,16 @@ export default function Gallery({ onVerProyecto }) {
     const rowObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("opacity-100", "translate-y-0", "scale-100");
-          entry.target.classList.remove("opacity-0", "translate-y-12", "scale-95");
+          entry.target.classList.add(
+            "opacity-100",
+            "translate-y-0",
+            "scale-100",
+          );
+          entry.target.classList.remove(
+            "opacity-0",
+            "translate-y-12",
+            "scale-95",
+          );
         }
       });
     }, observerOptions);
@@ -84,8 +121,10 @@ export default function Gallery({ onVerProyecto }) {
 
   return (
     <div className="bg-white text-gray-900 w-full overflow-hidden relative">
-      <section id="proyectos" className="py-24 max-w-[1300px] mx-auto px-6 md:px-12 lg:px-16">
-        
+      <section
+        id="proyectos"
+        className="py-24 max-w-[1300px] mx-auto px-6 md:px-12 lg:px-16"
+      >
         {/* ENCABEZADO DE LA SECCIÓN */}
         <div className="mb-14 text-center md:text-left">
           <span className="text-xs font-bold text-impulso-orange tracking-widest uppercase font-outfit block mb-3">
@@ -111,11 +150,15 @@ export default function Gallery({ onVerProyecto }) {
                     : "bg-white border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-200 hover:shadow-sm"
                 }`}
               >
-                <i className={`fa-solid ${cat.icon} text-sm transition-colors ${esActivo ? "text-white" : "text-gray-400 group-hover:text-impulso-orange"}`}></i>
+                <i
+                  className={`fa-solid ${cat.icon} text-sm transition-colors ${esActivo ? "text-white" : "text-gray-400 group-hover:text-impulso-orange"}`}
+                ></i>
                 <span className="font-raleway text-xs font-bold uppercase tracking-wider whitespace-nowrap">
                   {cat.label}
                 </span>
-                <span className={`font-outfit text-[10px] font-bold px-1.5 py-0.5 rounded transition-colors ${esActivo ? "bg-white/20 text-white" : "bg-gray-100 text-gray-400 group-hover:bg-gray-200"}`}>
+                <span
+                  className={`font-outfit text-[10px] font-bold px-1.5 py-0.5 rounded transition-colors ${esActivo ? "bg-white/20 text-white" : "bg-gray-100 text-gray-400 group-hover:bg-gray-200"}`}
+                >
                   {cat.count}
                 </span>
               </button>
@@ -124,7 +167,10 @@ export default function Gallery({ onVerProyecto }) {
         </div>
 
         {/* CONTENEDOR DE PROYECTOS FILTRADOS */}
-        <div ref={containerRef} className="flex flex-col gap-24 md:gap-32 min-h-[600px] w-full">
+        <div
+          ref={containerRef}
+          className="flex flex-col gap-24 md:gap-32 min-h-[600px] w-full"
+        >
           {proyectosFiltrados.map((proj, idx) => {
             const esInvertido = idx % 2 !== 0;
 
@@ -165,20 +211,56 @@ export default function Gallery({ onVerProyecto }) {
                     {proj.desc}
                   </p>
 
-                  <div className="flex gap-6 mt-6 pt-6 border-t border-gray-100 w-full">
-                    <div>
-                      <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">Alcance</p>
-                      <p className="text-xs font-bold text-gray-700 font-outfit mt-0.5">Ingeniería y Construcción</p>
+                  {/* 📊 GRID COMPACTO DE 4 DATOS CON ICONOS DE FONT AWESOME */}
+                  <div className="grid grid-cols-2 gap-x-6 gap-y-4 mt-6 pt-6 border-t border-gray-100 w-full">
+                    <div className="flex items-start gap-2.5">
+                      <i className="fa-solid fa-briefcase text-impulso-orange text-xs mt-1"></i>
+                      <div>
+                        <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">
+                          Alcance
+                        </p>
+                        <p className="text-xs font-bold text-gray-700 font-outfit mt-0.5">
+                          Ingeniería y Construcción
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">Estado</p>
-                      <p className="text-xs font-bold text-gray-700 font-outfit mt-0.5">Ejecutado con Éxito</p>
+                    <div className="flex items-start gap-2.5">
+                      <i className="fa-solid fa-circle-check text-impulso-orange text-xs mt-1"></i>
+                      <div>
+                        <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">
+                          Estado
+                        </p>
+                        <p className="text-xs font-bold text-gray-700 font-outfit mt-0.5">
+                          Ejecutado con Éxito
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <i className="fa-solid fa-maximize text-impulso-orange text-xs mt-1"></i>
+                      <div>
+                        <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">
+                          Área
+                        </p>
+                        <p className="text-xs font-bold text-gray-700 font-outfit mt-0.5">
+                          {proj.area}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <i className="fa-solid fa-calendar-days text-impulso-orange text-xs mt-1"></i>
+                      <div>
+                        <p className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">
+                          Año
+                        </p>
+                        <p className="text-xs font-bold text-gray-700 font-outfit mt-0.5">
+                          {proj.ano}
+                        </p>
+                      </div>
                     </div>
                   </div>
 
-                  {/* 👈 MODIFICADO: Cambiamos <a> por un <button> con la acción onClick */}
                   <button
-                    onClick={() => onVerProyecto && onVerProyecto(proj.id)}
+                    onClick={() => onVerProyecto && onVerProyecto(proj.slug)}
                     className="mt-8 inline-flex items-center justify-center px-6 py-3 border border-gray-900 text-gray-900 font-raleway text-xs font-bold uppercase tracking-widest rounded bg-transparent hover:text-impulso-orange hover:border-impulso-orange hover:bg-gray-50 transition-all duration-300 group/btn cursor-pointer"
                   >
                     Ver Proyecto
@@ -219,8 +301,6 @@ export default function Gallery({ onVerProyecto }) {
           );
         })}
       </div>
-
-      
     </div>
   );
 }

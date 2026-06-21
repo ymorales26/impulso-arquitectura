@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Routes, Route, useNavigate, Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -11,6 +10,7 @@ import ServiciosPage from './pages/ServiciosPage';
 import LibroReclamaciones from './pages/LibroReclamaciones';
 import PoliticasPrivacidad from './pages/PoliticasPrivacidad'; // Importación 1
 import TerminosCondiciones from './pages/TerminosCondiciones'; // Importación 2
+import TrayectoriaYValor from "./components/TrayectoriaYValor";
 
 // Este componente "Layout" define qué páginas SÍ tienen Navbar y Footer
 const MainLayout = () => (
@@ -33,9 +33,13 @@ export default function App() {
           <Route path="/" element={
             <main>
               <Hero />
+              
               <section id="proyectos">
-                <Gallery onVerProyecto={(id) => navigate(`/proyecto/${id}`)} />
+                <Gallery onVerProyecto={(slug) => navigate(`/proyecto/${slug}`)} />
               </section>
+
+              {/* 2. INYECTAMOS EL COMPONENTE AQUÍ JUSTO DEBAJO DE GALLERY 👇 */}
+              <TrayectoriaYValor />
             </main>
           } />
           
@@ -47,7 +51,7 @@ export default function App() {
         </Route>
 
         {/* Ruta que NO lleva Header y Footer */}
-        <Route path="/proyecto/:proyectoId" element={
+        <Route path="/proyecto/:slug" element={
           <DetalleProyectoPage onClose={() => navigate('/')} />
         } />
       </Routes>
