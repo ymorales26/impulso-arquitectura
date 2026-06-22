@@ -5,15 +5,15 @@ import { Link } from "react-router-dom";
 const IMAGENES_SLIDER = [
   {
     id: 1,
-    url: "https://images.pexels.com/photos/11953163/pexels-photo-11953163.jpeg",
-    subtitle: "Diseño Vanguardista",
-    title: "Arquitectura que Trasciende",
-  },
-  {
-    id: 2,
     url: "https://images.pexels.com/photos/34808220/pexels-photo-34808220.jpeg",
     subtitle: "Ingeniería Estructural",
     title: "Precisión en Cada Detalle",
+  },
+  {
+    id: 2,
+    url: "https://images.pexels.com/photos/11953163/pexels-photo-11953163.jpeg",
+    subtitle: "Diseño Vanguardista",
+    title: "Arquitectura que Trasciende",
   },
   {
     id: 3,
@@ -74,7 +74,9 @@ export default function Hero() {
             <div
               key={slide.id}
               className={`absolute inset-0 w-full h-full transition-all duration-1000 ease-in-out ${
-                isActive ? "opacity-100 visible z-10" : "opacity-0 invisible z-0"
+                isActive
+                  ? "opacity-100 visible z-10"
+                  : "opacity-0 invisible z-0"
               }`}
             >
               {/* ✨ FIX: Imagen con mayor claridad (de 0.40 a 0.55) */}
@@ -93,7 +95,9 @@ export default function Hero() {
                 <div className="container mx-auto px-6 md:px-[7vw]">
                   <div
                     className={`max-w-3xl transition-all duration-1000 delay-300 transform ${
-                      isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                      isActive
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-10"
                     }`}
                   >
                     <span className="font-outfit text-sm md:text-base font-bold text-impulso-orange tracking-[4px] uppercase block mb-3 shadow-sm">
@@ -108,7 +112,9 @@ export default function Hero() {
 
                     {/* DESCRIPCIÓN */}
                     <p className="font-raleway text-white mt-5 text-sm md:text-base max-w-2xl leading-relaxed font-semibold drop-shadow-sm">
-                      Diseñamos y construimos tu proyecto en Huaraz con metodología BIM, planificación técnica y presupuesto claro desde el inicio.
+                      Diseñamos y construimos tu proyecto en Huaraz con
+                      metodología BIM, planificación técnica y presupuesto claro
+                      desde el inicio.
                     </p>
 
                     {/* CONTENEDOR DE ICONOS TÉCNICOS DESTACADOS */}
@@ -133,7 +139,6 @@ export default function Hero() {
                         <i className="fa-solid fa-calendar-check ml-2.5 transform transition-transform duration-300 group-hover/btn:scale-110"></i>
                       </Link>
                     </div>
-
                   </div>
                 </div>
               </div>

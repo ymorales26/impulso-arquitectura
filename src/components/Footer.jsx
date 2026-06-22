@@ -118,28 +118,40 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* COLUMNA 3: CONTACTO */}
-          <div>
-            <h4 className="font-outfit text-white text-base uppercase tracking-wider mb-6 relative after:absolute after:bottom-[-8px] after:left-0 after:w-8 after:h-[2px] after:bg-impulso-orange">
-              Contacto
-            </h4>
-            <ul className="space-y-4 text-sm text-gray-400/80">
-              <li className="flex items-start gap-3">
-                <i className="fa-solid fa-location-dot text-impulso-orange mt-1"></i>
-                <span>Av. Principal 123, Oficina 401</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <i className="fa-solid fa-phone text-impulso-orange"></i>
-                <span>+51 959 679 522</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <i className="fa-solid fa-envelope text-impulso-orange"></i>
-                <span className="break-all">
-                  contacto@impulsoingenieros.com
-                </span>
-              </li>
-            </ul>
-          </div>
+{/* COLUMNA 3: CONTACTO */}
+<div>
+  <h4 className="font-outfit text-white text-base uppercase tracking-wider mb-6 relative after:absolute after:bottom-[-8px] after:left-0 after:w-8 after:h-[2px] after:bg-impulso-orange">
+    Contacto
+  </h4>
+  <ul className="space-y-4 text-sm text-gray-400/80">
+    <li className="flex items-start gap-3">
+      <i className="fa-solid fa-location-dot text-impulso-orange mt-1"></i>
+      <span>Pj. Tomas Peñaranda - Centenario Nro. 102 (Jr Mariano Melgar Con Jr Pallasca) Ancash - Huaraz - Independencia</span>
+    </li>
+    <li className="flex items-center gap-3">
+      <i className="fa-solid fa-phone text-impulso-orange"></i>
+      <a href="tel:+51959679522" className="hover:text-impulso-orange transition-colors">
+        +51 959 679 522
+      </a>
+    </li>
+    <li className="flex flex-col gap-2">
+      <a 
+        href="mailto:ymorales@impulso.pe" 
+        className="flex items-center gap-3 hover:text-impulso-orange transition-colors"
+      >
+        <i className="fa-solid fa-user-tie text-impulso-orange"></i>
+        <span>ymorales@impulso.pe</span>
+      </a>
+      <a 
+        href="mailto:administracion@impulso.pe" 
+        className="flex items-center gap-3 hover:text-impulso-orange transition-colors"
+      >
+        <i className="fa-solid fa-headset text-impulso-orange"></i>
+        <span>administracion@impulso.pe</span>
+      </a>
+    </li>
+  </ul>
+</div>
         </div>
 
         {/* 📘 LIBRO DE RECLAMACIONES REOPTIMIZADO (Fila completa, icono integrado y más grande) 
