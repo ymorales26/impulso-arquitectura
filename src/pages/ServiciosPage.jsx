@@ -117,7 +117,7 @@ export default function ServiciosPage() {
       {/* 1. BANNER PRINCIPAL */}
       <div ref={bannerRef} className="relative w-full h-[65vh] flex items-center justify-start overflow-hidden z-10">
         <img 
-          src="https://images.pexels.com/photos/27797720/pexels-photo-27797720.jpeg" 
+          src="img/proyectos/banner-02.avif" 
           alt="Modern Architecture" 
           className="absolute inset-0 w-full h-full object-cover scale-105"
         />

@@ -5,37 +5,37 @@ import { Link } from "react-router-dom";
 const IMAGENES_SLIDER = [
   {
     id: 1,
-    url: "https://images.pexels.com/photos/34808220/pexels-photo-34808220.jpeg",
+    url: "img/proyectos/banner-01.avif",
     subtitle: "Ingeniería Estructural",
     title: "Precisión en Cada Detalle",
   },
   {
     id: 2,
-    url: "https://images.pexels.com/photos/11953163/pexels-photo-11953163.jpeg",
+    url: "img/proyectos/banner-02.avif",
     subtitle: "Diseño Vanguardista",
     title: "Arquitectura que Trasciende",
   },
   {
     id: 3,
-    url: "https://images.pexels.com/photos/29861540/pexels-photo-29861540.jpeg",
+    url: "img/proyectos/banner-03.avif",
     subtitle: "Gestión de Proyectos",
     title: "Construyendo el Futuro Urbano",
   },
   {
     id: 4,
-    url: "https://images.pexels.com/photos/18142047/pexels-photo-18142047.jpeg",
+    url: "img/proyectos/banner-04.avif",
     subtitle: "Infraestructura Vial",
     title: "Conectividad y Desarrollo Sostenible",
   },
   {
     id: 5,
-    url: "https://images.pexels.com/photos/30810995/pexels-photo-30810995.jpeg",
+    url: "img/proyectos/banner-05.avif",
     subtitle: "Tecnología e Innovación",
     title: "Modelamiento BIM de Alta Complejidad",
   },
   {
     id: 6,
-    url: "https://images.pexels.com/photos/13046597/pexels-photo-13046597.jpeg",
+    url: "img/proyectos/banner-06.avif",
     subtitle: "Sustentabilidad",
     title: "Soluciones Estructurales Eco-Eficientes",
   },

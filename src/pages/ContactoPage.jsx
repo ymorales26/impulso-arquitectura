@@ -31,7 +31,7 @@ export default function ContactoPage() {
       
       {/* 1. BANNER */}
       <div ref={bannerRef} className="relative w-full h-[50vh] flex items-center justify-start overflow-hidden">
-        <img src="https://images.pexels.com/photos/27797720/pexels-photo-27797720.jpeg" className="absolute inset-0 w-full h-full object-cover" alt="Contacto" />
+        <img src="img/proyectos/banner-01.avif" className="absolute inset-0 w-full h-full object-cover" alt="Contacto" />
         <div className="absolute inset-0 bg-black/70"></div>
         <div className="relative z-10 px-6 md:px-20 max-w-[1200px] mx-auto w-full">
           <div className={`transition-all duration-1000 ${bannerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
