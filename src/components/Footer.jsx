@@ -1,17 +1,12 @@
-import { Link } from "react-router-dom"; // 1. Importa el Link arriba de tu componente
+// src/components/Footer.jsx
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 export default function Footer() {
   const [showTopBtn, setShowTopBtn] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 600) {
-        setShowTopBtn(true);
-      } else {
-        setShowTopBtn(false);
-      }
-    };
+    const handleScroll = () => setShowTopBtn(window.scrollY > 600);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -21,212 +16,206 @@ export default function Footer() {
   return (
     <footer
       id="contacto"
-      className="bg-[#000714] text-gray-400 pt-20 pb-28 md:pb-12 border-t-4 border-impulso-orange relative z-10 font-raleway overflow-hidden"
+      className="bg-gray-950 text-gray-400 font-raleway relative overflow-hidden"
     >
-      {/* 📐 TEXTURA ARQUITECTÓNICA EN SVG (Grilla técnica de planos / Blueprint) */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 mix-blend-overlay">
+      {/* Textura grid técnica — muy sutil */}
+      <div className="absolute inset-0 opacity-[0.025] pointer-events-none z-0">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <pattern
-              id="grid"
-              width="40"
-              height="40"
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M 40 0 L 0 0 0 40"
-                fill="none"
-                stroke="white"
-                strokeWidth="1"
-              />
-              <circle cx="40" cy="0" r="1.5" fill="white" />
-              <circle cx="0" cy="40" r="1.5" fill="white" />
+            <pattern id="grid-footer" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="1" />
+              <circle cx="40" cy="0" r="1" fill="white" />
             </pattern>
           </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
+          <rect width="100%" height="100%" fill="url(#grid-footer)" />
         </svg>
       </div>
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-10">
-        {/* SECCIÓN PRINCIPAL: 3 COLUMNAS REESTRUCTURADAS */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
-          {/* COLUMNA 1: MARCA Y REDES */}
+      <div className="relative z-10 max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24">
+
+        {/* ── FRANJA SUPERIOR: marca grande ─────────────────────────── */}
+        <div className="border-b border-white/8 py-16 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+          {/* Logo + claim */}
           <div>
-            {/* LOGO DE LA EMPRESA */}
-            {/* LOGO DE LA EMPRESA */}
-            <div className="h-20 flex items-center">
-              <img
-                src="/img/logo_blanco.png"
-                alt="Impulso Proyectistas e Ingenieros"
-                className="h-full w-auto object-contain"
-              />
-            </div>
-            <p className="text-impulso-orange font-outfit font-bold text-xs uppercase tracking-wider mt-1">
+            <img
+              src="/img/logo_blanco.png"
+              alt="Impulso Proyectistas e Ingenieros"
+              className="h-14 w-auto object-contain mb-4"
+            />
+            <p className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange">
               Proyectistas e Ingenieros S.A.C.
             </p>
-            <p className="text-gray-400/60 mt-4 text-sm leading-relaxed">
-              Soluciones integrales en ingeniería, diseño y gestión de proyectos
-              con altos estándares de calidad.
-            </p>
-
-            <div className="flex gap-3 mt-6">
-              {["facebook-f", "instagram", "tiktok"].map((red) => (
-                <a
-                  key={red}
-                  href="#"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center text-gray-400 hover:bg-impulso-orange hover:text-white transition-all duration-300 border border-white/5"
-                  aria-label={red}
-                >
-                  <i className={`fa-brands fa-${red} text-sm`}></i>
-                </a>
-              ))}
-            </div>
           </div>
 
-          {/* COLUMNA 2: VALOR TÉCNICO / GARANTÍAS DE OBRA (Reemplaza Especialidades) */}
-          <div>
-            <h4 className="font-outfit text-white text-base uppercase tracking-wider mb-6 relative after:absolute after:bottom-[-8px] after:left-0 after:w-8 after:h-[2px] after:bg-impulso-orange">
-              Respaldo Técnico
-            </h4>
-            <ul className="space-y-4 text-sm">
+          {/* Frase editorial */}
+          <p className="font-raleway text-gray-500 text-sm leading-relaxed max-w-xs md:text-right">
+            Diseño, ingeniería y gestión de proyectos con altos estándares de calidad en Huaraz y el Perú.
+          </p>
+        </div>
+
+        {/* ── CUERPO PRINCIPAL: 3 columnas ──────────────────────────── */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-b border-white/8">
+
+          {/* COL 1 — Respaldo técnico */}
+          <div className="py-14 md:pr-12 md:border-r border-white/8">
+            <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-8">
+              Respaldo técnico
+            </span>
+            <ul className="space-y-6">
               {[
-                {
-                  title: "Estándar Antisísmico",
-                  desc: "Estructuras calculadas bajo rigurosa normativa de seguridad.",
-                },
-                {
-                  title: "Optimización de Recursos",
-                  desc: "Presupuestos y metrados precisos mediante tecnología BIM.",
-                },
-                {
-                  title: "Gestión Integral",
-                  desc: "Acompañamiento desde el concepto plano hasta la entrega final.",
-                },
-              ].map((item, idx) => (
-                <li key={idx} className="flex flex-col gap-0.5">
-                  <span className="text-white font-outfit text-xs font-bold uppercase tracking-wider flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-impulso-orange rounded-full"></span>
+                { title: "Estándar Antisísmico",    desc: "Estructuras calculadas bajo rigurosa normativa de seguridad." },
+                { title: "Optimización de Recursos", desc: "Presupuestos y metrados precisos mediante tecnología BIM." },
+                { title: "Gestión Integral",         desc: "Acompañamiento desde el concepto hasta la entrega final." },
+              ].map((item, i) => (
+                <li key={i}>
+                  <div className="w-6 h-px bg-impulso-orange mb-3" />
+                  <p className="font-outfit text-white text-xs font-bold uppercase tracking-wider mb-1">
                     {item.title}
-                  </span>
-                  <span className="text-gray-500 text-xs pl-3.5">
+                  </p>
+                  <p className="font-raleway text-gray-500 text-xs leading-relaxed">
                     {item.desc}
-                  </span>
+                  </p>
                 </li>
               ))}
             </ul>
           </div>
 
-{/* COLUMNA 3: CONTACTO */}
-<div>
-  <h4 className="font-outfit text-white text-base uppercase tracking-wider mb-6 relative after:absolute after:bottom-[-8px] after:left-0 after:w-8 after:h-[2px] after:bg-impulso-orange">
-    Contacto
-  </h4>
-  <ul className="space-y-4 text-sm text-gray-400/80">
-    <li className="flex items-start gap-3">
-      <i className="fa-solid fa-location-dot text-impulso-orange mt-1"></i>
-      <span>Pj. Tomas Peñaranda - Centenario Nro. 102 (Jr Mariano Melgar Con Jr Pallasca) Ancash - Huaraz - Independencia</span>
-    </li>
-    <li className="flex items-center gap-3">
-      <i className="fa-solid fa-phone text-impulso-orange"></i>
-      <a href="tel:+51959679522" className="hover:text-impulso-orange transition-colors">
-        +51 959 679 522
-      </a>
-    </li>
-    <li className="flex flex-col gap-2">
-      <a 
-        href="mailto:ymorales@impulso.pe" 
-        className="flex items-center gap-3 hover:text-impulso-orange transition-colors"
-      >
-        <i className="fa-solid fa-user-tie text-impulso-orange"></i>
-        <span>ymorales@impulso.pe</span>
-      </a>
-      <a 
-        href="mailto:administracion@impulso.pe" 
-        className="flex items-center gap-3 hover:text-impulso-orange transition-colors"
-      >
-        <i className="fa-solid fa-headset text-impulso-orange"></i>
-        <span>administracion@impulso.pe</span>
-      </a>
-    </li>
-  </ul>
-</div>
-        </div>
+          {/* COL 2 — Contacto */}
+          <div className="py-14 md:px-12 md:border-r border-white/8">
+            <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-8">
+              Contacto
+            </span>
+            <ul className="space-y-5 text-sm">
+              <li className="flex items-start gap-3">
+                <i className="fa-solid fa-location-dot text-impulso-orange mt-0.5 flex-shrink-0 text-xs" />
+                <span className="text-gray-400 text-xs leading-relaxed">
+                  Pj. Tomas Peñaranda - Centenario Nro. 102<br />
+                  Jr. Mariano Melgar con Jr. Pallasca<br />
+                  Independencia, Huaraz, Ancash
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <i className="fa-solid fa-phone text-impulso-orange text-xs flex-shrink-0" />
+                <a
+                  href="tel:+51959679522"
+                  className="text-gray-400 text-xs hover:text-impulso-orange transition-colors duration-200"
+                >
+                  +51 959 679 522
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <i className="fa-solid fa-user-tie text-impulso-orange text-xs flex-shrink-0" />
+                <a
+                  href="mailto:ymorales@gimpulso.pe"
+                  className="text-gray-400 text-xs hover:text-impulso-orange transition-colors duration-200"
+                >
+                  ymorales@gimpulso.pe
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <i className="fa-solid fa-headset text-impulso-orange text-xs flex-shrink-0" />
+                <a
+                  href="mailto:administracion@gimpulso.pe"
+                  className="text-gray-400 text-xs hover:text-impulso-orange transition-colors duration-200"
+                >
+                  administracion@gimpulso.pe
+                </a>
+              </li>
+            </ul>
+          </div>
 
-        {/* 📘 LIBRO DE RECLAMACIONES REOPTIMIZADO (Fila completa, icono integrado y más grande) 
-        <div className="mb-10">
-          <div className="border-t border-b border-white/5 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-gray-400 text-sm text-center sm:text-left">
-              ¿Tienes alguna sugerencia o disconformidad? Estamos listos para
-              escucharte.
+          {/* COL 3 — Redes + navegación */}
+          <div className="py-14 md:pl-12">
+            <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-8">
+              Síguenos
+            </span>
+
+            {/* Redes — cuadradas, sin border-radius */}
+            <div className="flex gap-3 mb-10">
+              {[
+                { red: "facebook-f",  href: "#" },
+                { red: "instagram",   href: "#" },
+                { red: "tiktok",      href: "#" },
+              ].map(({ red, href }) => (
+                <a
+                  key={red}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={red}
+                  className="w-10 h-10 border border-white/10 flex items-center justify-center text-gray-500 hover:border-impulso-orange hover:text-impulso-orange transition-all duration-300"
+                >
+                  <i className={`fa-brands fa-${red} text-xs`} />
+                </a>
+              ))}
             </div>
-            <Link
-              to="/libro-reclamaciones"
-              className="inline-flex items-center gap-3 border border-white/10 hover:border-impulso-orange text-white hover:text-impulso-orange px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest font-outfit transition-all duration-300 bg-white/[0.01] hover:bg-white/[0.03] group"
-            >
-              <i className="fa-solid fa-book-open text-base text-impulso-orange transition-transform group-hover:scale-110"></i>
-              <span>Libro de Reclamaciones</span>
-            </Link>
-          </div>
-        </div> */}
 
-        {/* 📜 TEXTO LEGAL DISCRETO */}
-        <div className="mb-10 text-[12px] text-gray-600 text-justify leading-relaxed font-medium">
-          <p>
-            * Todas las imágenes de la publicidad fueron elaboradas con fines
-            ilustrativos y sus características y dimensiones son aproximadas y
-            referenciales; por tanto, pueden presentar modificaciones en el
-            transcurso del proyecto, no constituyendo necesariamente una
-            representación exacta de la realidad. Su único objetivo es mostrar
-            una caracterización general del proyecto y no cada uno de sus
-            detalles. Verifique las características y especificaciones de su
-            departamento al momento de la compra.
+            {/* Links legales y acceso rápido */}
+            <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-5">
+              Acceso rápido
+            </span>
+            <ul className="space-y-3">
+              {[
+                { label: "Ver proyectos",              to: "/#proyectos"           },
+                { label: "Nuestros servicios",         to: "/servicios"            },
+                { label: "Agenda una asesoría",        to: "/contacto"             },
+                { label: "Libro de Reclamaciones",     to: "/libro-reclamaciones"  },
+              ].map((item) => (
+                <li key={item.to}>
+                  <Link
+                    to={item.to}
+                    className="font-raleway text-xs text-gray-500 hover:text-impulso-orange transition-colors duration-200 inline-flex items-center gap-2 group"
+                  >
+                    <span className="w-3 h-px bg-gray-700 group-hover:w-5 group-hover:bg-impulso-orange transition-all duration-300" />
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+        </div>
+
+        {/* ── AVISO LEGAL ───────────────────────────────────────────── */}
+        <div className="py-8 border-b border-white/8">
+          <p className="text-[11px] text-gray-600 leading-relaxed text-justify">
+            * Todas las imágenes fueron elaboradas con fines ilustrativos. Sus características y dimensiones son
+            aproximadas y referenciales, pudiendo presentar modificaciones en el transcurso del proyecto.
+            No constituyen una representación exacta de la realidad.
           </p>
-          <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 text-gray-500 font-semibold">
-            <Link
-              to="/terminos-condiciones"
-              className="text-impulso-orange hover:underline transition-all"
-            >
-              Términos y Condiciones
-            </Link>
-            <span className="text-gray-300 hidden sm:inline">|</span>
-            <Link
-              to="/politicas-privacidad"
-              className="text-impulso-orange hover:underline transition-all"
-            >
-              Políticas de Privacidad
-            </Link>
+          <div className="flex gap-6 mt-4">
+            <Link to="/terminos-condiciones"  className="text-[11px] text-impulso-orange hover:underline transition-all">Términos y Condiciones</Link>
+            <Link to="/politicas-privacidad"  className="text-[11px] text-impulso-orange hover:underline transition-all">Políticas de Privacidad</Link>
           </div>
         </div>
 
-        {/* PEU DE PÀGINA INFERIOR */}
-        <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-          <p className="text-center sm:text-left">
-            &copy; 2026 Impulso Proyectistas e Ingenieros S.A.C. Todos los
-            derechos reservados.
+        {/* ── PIE FINAL ─────────────────────────────────────────────── */}
+        <div className="py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-[11px] text-gray-600 text-center sm:text-left">
+            © 2026 Impulso Proyectistas e Ingenieros S.A.C. — Todos los derechos reservados.
           </p>
 
-          {/* Botón TOP estático solo visible en móviles */}
+          {/* Botón TOP — móvil */}
           <button
             onClick={scrollToTop}
-            className="md:hidden w-10 h-10 bg-white/5 border border-white/10 text-gray-400 rounded-xl flex items-center justify-center active:bg-impulso-orange active:text-white transition-all cursor-pointer"
+            className="sm:hidden w-9 h-9 border border-white/10 text-gray-500 flex items-center justify-center hover:border-impulso-orange hover:text-impulso-orange transition-all cursor-pointer"
             aria-label="Ir arriba"
           >
-            <i className="fa-solid fa-chevron-up text-xs"></i>
+            <i className="fa-solid fa-chevron-up text-xs" />
           </button>
         </div>
+
       </div>
 
-      {/* 💻 BOTÓN TOP FIJO ESCRITORIO (Aparece dinámicamente con el scroll, alineado con la altura de WhatsApp) */}
+      {/* Botón TOP fijo desktop */}
       {showTopBtn && (
         <button
           onClick={scrollToTop}
-          className="hidden md:flex fixed bottom-6 right-24 w-12 h-12 bg-[#000714] border border-impulso-orange/40 text-impulso-orange rounded-full items-center justify-center hover:bg-impulso-orange hover:text-white hover:border-impulso-orange transition-all duration-300 shadow-2xl cursor-pointer z-50 animate-fade-in"
+          className="hidden sm:flex fixed bottom-6 right-24 w-11 h-11 bg-gray-950 border border-impulso-orange/40 text-impulso-orange items-center justify-center hover:bg-impulso-orange hover:text-white transition-all duration-300 shadow-2xl cursor-pointer z-50"
           style={{ marginRight: "10px" }}
           aria-label="Subir al inicio"
         >
-          <i className="fa-solid fa-chevron-up text-sm"></i>
+          <i className="fa-solid fa-chevron-up text-xs" />
         </button>
       )}
     </footer>

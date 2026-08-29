@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+// src/pages/ContactoPage.jsx
+import { useState, useEffect } from "react";
 
 export default function ContactoPage() {
-  const bannerRef = useRef(null);
   const [bannerVisible, setBannerVisible] = useState(false);
   const [formData, setFormData] = useState({ nombre: "", correo: "", celular: "", mensaje: "" });
   const [estadoEnvio, setEstadoEnvio] = useState({ enviando: false, exito: false, error: false });
@@ -22,96 +22,279 @@ export default function ContactoPage() {
       if (response.ok) {
         setEstadoEnvio({ enviando: false, exito: true, error: false });
         setFormData({ nombre: "", correo: "", celular: "", mensaje: "" });
-      } else { setEstadoEnvio({ enviando: false, exito: false, error: true }); }
-    } catch (error) { setEstadoEnvio({ enviando: false, exito: false, error: true }); }
+      } else {
+        setEstadoEnvio({ enviando: false, exito: false, error: true });
+      }
+    } catch {
+      setEstadoEnvio({ enviando: false, exito: false, error: true });
+    }
   };
 
   return (
-    <div id="contacto" className="min-h-screen bg-white text-gray-900 selection:bg-impulso-orange selection:text-white">
-      
-      {/* 1. BANNER */}
-      <div ref={bannerRef} className="relative w-full h-[50vh] flex items-center justify-start overflow-hidden">
-        <img src="img/proyectos/banner-01.avif" className="absolute inset-0 w-full h-full object-cover" alt="Contacto" />
-        <div className="absolute inset-0 bg-black/70"></div>
-        <div className="relative z-10 px-6 md:px-20 max-w-[1200px] mx-auto w-full">
-          <div className={`transition-all duration-1000 ${bannerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
-            <span className="text-impulso-orange font-bold tracking-[0.3em] uppercase text-xs mb-4 block">Ingeniería & Diseño</span>
-            <h1 className="text-4xl md:text-6xl font-black uppercase text-white mb-6">Contacto</h1>
-            <div className="w-20 h-1 bg-impulso-orange"></div>
+    <div className="min-h-screen bg-[#f5f3ef] text-gray-900 selection:bg-impulso-orange selection:text-white font-raleway">
+
+      {/* ── BANNER EDITORIAL ──────────────────────────────────────── */}
+      <div className="relative w-full h-[55vh] min-h-[380px] overflow-hidden">
+        <img
+          src="img/proyectos/banner-01.avif"
+          alt="Contacto"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{
+            transform: bannerVisible ? "scale(1.04)" : "scale(1)",
+            transition: "transform 7000ms ease-out",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent" />
+
+        {/* Texto */}
+        <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-14">
+          <div
+            className={`transition-all duration-1000 ${bannerVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          >
+            <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-4">
+              Ingeniería & Diseño
+            </span>
+            <h1
+              className="font-outfit font-black text-white leading-none tracking-tighter"
+              style={{ fontSize: "clamp(3rem, 8vw, 7rem)" }}
+            >
+              Contacto
+            </h1>
           </div>
         </div>
+
+        {/* Línea divisoria inferior */}
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-white/10" />
       </div>
 
-      {/* 2. SECCIÓN PRINCIPAL */}
-      <div className="max-w-[1300px] mx-auto px-6 py-20 grid lg:grid-cols-12 gap-16">
-        
-        {/* COLUMNA IZQUIERDA: INFO */}
-        <div className="lg:col-span-5 space-y-10">
+      {/* ── CUERPO PRINCIPAL ──────────────────────────────────────── */}
+      <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 py-20 grid lg:grid-cols-12 gap-16 lg:gap-24">
+
+        {/* ── COLUMNA IZQUIERDA: INFO ────────────────────────────── */}
+        <div className="lg:col-span-5 flex flex-col gap-12">
+
+          {/* Intro */}
           <div>
-            <h2 className="text-3xl font-black uppercase mb-6">Conéctate con nuestro equipo</h2>
-            <p className="text-gray-600 text-sm leading-relaxed mb-8">
-              Ya sea para una cotización o el desarrollo integral de un proyecto BIM, nuestro equipo multidisciplinario te responderá en menos de 24 horas.
+            <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-5">
+              Estudio Impulso
+            </span>
+            <h2
+              className="font-outfit font-black text-gray-900 leading-none tracking-tighter mb-6"
+              style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)" }}
+            >
+              Conéctate con<br />nuestro equipo
+            </h2>
+            <p className="font-raleway text-gray-500 text-sm leading-relaxed">
+              Ya sea para una cotización o el desarrollo integral de un proyecto, nuestro equipo te responderá en menos de 24 horas.
             </p>
           </div>
 
-          <div className="space-y-4">
-            <a href="https://wa.me/51959679522" target="_blank" rel="noopener noreferrer" className="flex items-center p-4 bg-gray-50 rounded-xl hover:border-impulso-orange/30 border border-transparent transition-all group">
-              <div className="w-12 h-12 shrink-0 bg-white border flex items-center justify-center text-impulso-orange mr-4 rounded-lg shadow-sm"><i className="fa-solid fa-phone"></i></div>
-              <div><p className="text-[10px] uppercase text-gray-400 font-bold">Llámanos o WhatsApp</p><p className="font-bold">+51 959 679 522</p></div>
-            </a>
-            <a href="mailto:ymorales@impulso.pe" className="flex items-center p-4 bg-gray-50 rounded-xl hover:border-impulso-orange/30 border border-transparent transition-all group">
-              <div className="w-12 h-12 shrink-0 bg-white border flex items-center justify-center text-impulso-orange mr-4 rounded-lg shadow-sm"><i className="fa-solid fa-envelope"></i></div>
-              <div><p className="text-[10px] uppercase text-gray-400 font-bold">Escríbenos por Correo</p><p className="font-bold">ymorales@impulso.pe</p></div>
-            </a>
-            <div className="flex items-center p-4 bg-gray-50 rounded-xl border border-transparent">
-              <div className="w-12 h-12 shrink-0 bg-white border flex items-center justify-center text-impulso-orange mr-4 rounded-lg shadow-sm"><i className="fa-solid fa-location-dot"></i></div>
-              <div><p className="text-[10px] uppercase text-gray-400 font-bold">Oficina Principal</p><p className="font-bold text-sm">Pj. Tomas Peñaranda - Centenario Nro. 102, Ancash - Huaraz</p></div>
-            </div>
-          </div>
+          {/* Divisor */}
+          <div className="w-full h-px bg-gray-300" />
 
-          <div className="p-6 bg-[#02184c] rounded-2xl text-white">
-            <h4 className="font-bold text-lg mb-2">¿Necesitas asesoría?</h4>
-            <p className="text-blue-100 text-sm mb-4">Estamos listos para evaluar tu proyecto de ingeniería.</p>
-            <a href="https://wa.me/51959679522?text=Hola,%20solicito%20información%20sobre%20sus%20servicios%20de%20ingeniería." target="_blank" rel="noopener noreferrer" className="block w-full py-3 bg-impulso-orange text-center font-bold text-xs uppercase rounded-lg hover:bg-orange-600 transition-colors">
-              Solicitar información
-            </a>
-          </div>
+          {/* Datos de contacto — estilo lista editorial */}
+          <ul className="space-y-6">
+            {[
+              {
+                icon: "fa-phone",
+                label: "Llámanos o WhatsApp",
+                value: "+51 959 679 522",
+                href: "https://wa.me/51959679522",
+              },
+              {
+                icon: "fa-envelope",
+                label: "Gerencia",
+                value: "ymorales@gimpulso.pe",
+                href: "mailto:ymorales@gimpulso.pe",
+              },
+              {
+                icon: "fa-headset",
+                label: "Administración",
+                value: "administracion@gimpulso.pe",
+                href: "mailto:administracion@gimpulso.pe",
+              },
+              {
+                icon: "fa-location-dot",
+                label: "Oficina principal",
+                value: "Pj. Tomas Peñaranda Nro. 102, Independencia, Huaraz",
+                href: null,
+              },
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-5">
+                {/* Línea + ícono */}
+                <div className="flex flex-col items-center gap-1 pt-0.5 flex-shrink-0">
+                  <div className="w-px h-3 bg-impulso-orange" />
+                  <i className={`fa-solid ${item.icon} text-impulso-orange text-xs`} />
+                </div>
+                <div>
+                  <p className="font-outfit text-[10px] font-bold uppercase tracking-[3px] text-gray-400 mb-1">
+                    {item.label}
+                  </p>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      target={item.href.startsWith("http") ? "_blank" : undefined}
+                      rel="noreferrer"
+                      className="font-raleway text-sm text-gray-900 hover:text-impulso-orange transition-colors duration-200"
+                    >
+                      {item.value}
+                    </a>
+                  ) : (
+                    <p className="font-raleway text-sm text-gray-600 leading-snug">{item.value}</p>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          {/* Divisor */}
+          <div className="w-full h-px bg-gray-300" />
+
+          {/* CTA WhatsApp — sobrio */}
+          <a
+            href="https://wa.me/51959679522?text=Hola,%20solicito%20información%20sobre%20sus%20servicios."
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-4 group"
+          >
+            <span className="font-outfit text-xs font-bold uppercase tracking-[4px] text-gray-900 group-hover:text-impulso-orange transition-colors duration-300">
+              Solicitar información por WhatsApp
+            </span>
+            <span className="w-8 h-px bg-gray-900 group-hover:w-14 group-hover:bg-impulso-orange transition-all duration-500" />
+          </a>
         </div>
 
-        {/* COLUMNA DERECHA: FORMULARIO */}
+        {/* ── COLUMNA DERECHA: FORMULARIO ───────────────────────── */}
         <div className="lg:col-span-7">
-          <h3 className="text-2xl font-black uppercase mb-6 font-outfit">Escríbenos</h3>
-          <div className="bg-white p-8 border border-gray-100 rounded-2xl shadow-xl">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <input type="text" name="nombre" placeholder="Nombre Completo" required className="w-full bg-gray-50 p-4 rounded-xl border focus:border-impulso-orange outline-none" onChange={handleChange} value={formData.nombre} />
-                <input type="email" name="correo" placeholder="Correo Electrónico" required className="w-full bg-gray-50 p-4 rounded-xl border focus:border-impulso-orange outline-none" onChange={handleChange} value={formData.correo} />
+          <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-5">
+            Formulario de contacto
+          </span>
+          <h3
+            className="font-outfit font-black text-gray-900 leading-none tracking-tighter mb-10"
+            style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)" }}
+          >
+            Escríbenos
+          </h3>
+
+          {/* Formulario — inputs con borde inferior solamente, sin cards */}
+          <form onSubmit={handleSubmit} className="space-y-0">
+
+            <div className="grid md:grid-cols-2 gap-x-8">
+              {/* Nombre */}
+              <div className="border-b border-gray-300 py-4 focus-within:border-impulso-orange transition-colors duration-200">
+                <label className="font-outfit text-[9px] font-bold uppercase tracking-[3px] text-gray-400 block mb-1">
+                  Nombre completo *
+                </label>
+                <input
+                  type="text" name="nombre" required
+                  value={formData.nombre} onChange={handleChange}
+                  placeholder="Juan Pérez"
+                  className="w-full bg-transparent font-raleway text-sm text-gray-900 placeholder-gray-500 outline-none"
+                />
               </div>
-              <input type="tel" name="celular" placeholder="Celular" required className="w-full bg-gray-50 p-4 rounded-xl border focus:border-impulso-orange outline-none" onChange={handleChange} value={formData.celular} />
-              <textarea name="mensaje" rows="5" placeholder="Detalles del proyecto..." required className="w-full bg-gray-50 p-4 rounded-xl border focus:border-impulso-orange outline-none resize-none" onChange={handleChange} value={formData.mensaje}></textarea>
-              <button type="submit" className="w-full bg-gray-900 text-white py-4 rounded-xl font-bold hover:bg-impulso-orange transition-all">
-                {estadoEnvio.enviando ? "Enviando..." : "Enviar Mensaje"}
+
+              {/* Correo */}
+              <div className="border-b border-gray-300 py-4 focus-within:border-impulso-orange transition-colors duration-200">
+                <label className="font-outfit text-[9px] font-bold uppercase tracking-[3px] text-gray-400 block mb-1">
+                  Correo electrónico *
+                </label>
+                <input
+                  type="email" name="correo" required
+                  value={formData.correo} onChange={handleChange}
+                  placeholder="juan@correo.com"
+                  className="w-full bg-transparent font-raleway text-sm text-gray-900 placeholder-gray-500 outline-none"
+                />
+              </div>
+            </div>
+
+            {/* Celular */}
+            <div className="border-b border-gray-300 py-4 focus-within:border-impulso-orange transition-colors duration-200">
+              <label className="font-outfit text-[9px] font-bold uppercase tracking-[3px] text-gray-400 block mb-1">
+                Celular *
+              </label>
+              <input
+                type="tel" name="celular" required
+                value={formData.celular} onChange={handleChange}
+                placeholder="+51 999 999 999"
+                className="w-full bg-transparent font-raleway text-sm text-gray-900 placeholder-gray-500 outline-none"
+              />
+            </div>
+
+            {/* Mensaje */}
+            <div className="border-b border-gray-300 py-4 focus-within:border-impulso-orange transition-colors duration-200">
+              <label className="font-outfit text-[9px] font-bold uppercase tracking-[3px] text-gray-400 block mb-1">
+                Detalles del proyecto *
+              </label>
+              <textarea
+                name="mensaje" rows={5} required
+                value={formData.mensaje} onChange={handleChange}
+                placeholder="Cuéntanos sobre tu proyecto..."
+                className="w-full bg-transparent font-raleway text-sm text-gray-900 placeholder-gray-400 outline-none resize-none"
+              />
+            </div>
+
+            {/* Feedback */}
+            {estadoEnvio.exito && (
+              <p className="font-outfit text-xs font-bold uppercase tracking-widest text-green-600 pt-4">
+                ✓ Mensaje enviado. Te contactaremos pronto.
+              </p>
+            )}
+            {estadoEnvio.error && (
+              <p className="font-outfit text-xs font-bold uppercase tracking-widest text-red-500 pt-4">
+                Error al enviar. Intenta de nuevo o escríbenos directamente.
+              </p>
+            )}
+
+            {/* Botón */}
+            <div className="pt-10">
+              <button
+                type="submit"
+                disabled={estadoEnvio.enviando}
+                className="inline-flex items-center justify-center gap-3 bg-gray-900 hover:bg-impulso-orange text-white font-outfit text-xs font-bold uppercase tracking-[4px] px-8 py-4 transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {estadoEnvio.enviando ? (
+                  <>
+                    <i className="fa-solid fa-spinner fa-spin text-xs" />
+                    Enviando...
+                  </>
+                ) : (
+                  <>
+                    Enviar mensaje
+                    <i className="fa-solid fa-arrow-right-long text-xs" />
+                  </>
+                )}
               </button>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
-      
-      {/* 3. MAPA Y UBICACIÓN */}
-      <div className="w-full bg-gray-50 pt-16 border-t border-gray-100">
-        <div className="px-6 md:px-16 mb-10">
-          <h2 className="text-3xl font-black uppercase">Nuestra Ubicación</h2>
-          <p className="text-gray-500 mt-2">Visítanos en nuestra oficina principal en Huaraz.</p>
+
+      {/* ── MAPA ──────────────────────────────────────────────────── */}
+      <div className="border-t border-gray-300">
+        <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 pt-16 pb-10">
+          <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-4">
+            Ubicación
+          </span>
+          <h2
+            className="font-outfit font-black text-gray-900 leading-none tracking-tighter mb-10"
+            style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)" }}
+          >
+            Nuestra oficina
+          </h2>
         </div>
-        <div className="w-full h-[400px]">
-           <iframe 
-             src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3934.9064042755836!2d-77.52813890000002!3d-9.516861100000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOcKwMzEnMDAuNyJTIDc3wrAzMSc0MS4zIlc!5e0!3m2!1ses-419!2spe!4v1782056636785!5m2!1ses-419!2spe" 
-             className="w-full h-full" 
-             title="Mapa de ubicación"
-             allowFullScreen=""
-           ></iframe>
+        <div className="w-full h-[420px]">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3934.9064042755836!2d-77.52813890000002!3d-9.516861100000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOcKwMzEnMDAuNyJTIDc3wrAzMSc0MS4zIlc!5e0!3m2!1ses-419!2spe!4v1782056636785!5m2!1ses-419!2spe"
+            className="w-full h-full"
+            style={{ border: 0, filter: "grayscale(30%) contrast(1.05)" }}
+            title="Mapa de ubicación"
+            allowFullScreen=""
+            loading="lazy"
+          />
         </div>
       </div>
+
     </div>
   );
 }

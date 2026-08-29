@@ -1,139 +1,186 @@
-import { useState, useEffect, useRef } from "react";
-import { CATEGORIAS, PROYECTOS } from "../data/galleryData";
+// src/components/Gallery.jsx
+// Estilo estudio de arquitectura — layout editorial, sin filtros, 3 proyectos
+// Los datos viven aquí directamente (no depende de galleryData.js para los 3 proyectos principales)
+
+const PROYECTOS = [
+  {
+    id: "torre-leguia",
+    slug: "torre-leguia",
+    indice: "01",
+    titulo: "Torre Leguía",
+    lugar: "Huaraz, Ancash — 2024",
+    tipo: "Edificio de Uso Mixto",
+    img: "img/proyectos/torre-leguia.webp",
+    concepto:
+      "Diseñado en colaboración con el estudio Brag Arquitectos, el proyecto plantea un edificio de uso mixto que integra comercio y vivienda en un solo volumen. Su fachada modular, compuesta por concreto, ladrillo y vidrio, refleja un lenguaje contemporáneo vinculado al contexto de Huaraz, mientras que la vegetación en la cubierta y los balcones aporta confort ambiental e integra el edificio con el paisaje andino.",
+  },
+  {
+    id: "trivio",
+    slug: "trivio",
+    indice: "02",
+    titulo: "Trivio",
+    lugar: "Arequipa, Perú — 2025",
+    tipo: "Edificio Residencial",
+    img: "img/proyectos/trivio.webp",
+    concepto:
+      "Diseñado con un enfoque modernista, el edificio destaca por su composición de líneas puras, fachadas limpias y una distribución funcional que prioriza la iluminación, la ventilación natural y el confort de sus residentes, integrándose de manera armónica al entorno urbano de Arequipa.",
+  },
+  {
+    id: "plaza27",
+    slug: "plaza27",
+    indice: "03",
+    titulo: "Plaza 27",
+    lugar: "Huaraz, Ancash — 2025",
+    tipo: "Edificio Residencial",
+    img: "img/proyectos/plaza27.webp",
+    concepto:
+      "El proyecto responde a la monumentalidad de la Cordillera Blanca mediante una volumetría esbelta que enfatiza la verticalidad y lo consolida como un hito urbano. Su jerarquía volumétrica, materialidad contemporánea y ritmo compositivo establecen un diálogo con el paisaje andino, enmarcando las vistas hacia los nevados y proyectando una arquitectura de carácter atemporal.",
+  },
+];
 
 export default function Gallery({ onVerProyecto }) {
-  const [categoriaActiva, setCategoriaActiva] = useState("todos");
-  const containerRef = useRef(null);
-
-  const proyectosFiltrados = PROYECTOS.filter(
-    (proj) => categoriaActiva === "todos" || proj.category === categoriaActiva,
-  );
-
-  const getCount = (id) => {
-    if (id === "todos") return PROYECTOS.length;
-    return PROYECTOS.filter((p) => p.category === id).length;
-  };
-
-  useEffect(() => {
-    const rows = containerRef.current?.querySelectorAll(".proyecto-row");
-    if (!rows) return;
-
-    const observerOptions = {
-      root: null,
-      rootMargin: "-5% 0px -5% 0px",
-      threshold: 0.1,
-    };
-
-    const rowObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("opacity-100", "translate-y-0", "scale-100");
-          entry.target.classList.remove("opacity-0", "translate-y-12", "scale-95");
-        }
-      });
-    }, observerOptions);
-
-    rows.forEach((row) => rowObserver.observe(row));
-    return () => rows.forEach((row) => rowObserver.unobserve(row));
-  }, [categoriaActiva]);
-
   return (
-    <div className="bg-white text-gray-900 w-full overflow-hidden relative">
-      <section id="proyectos" className="py-24 max-w-[1300px] mx-auto px-6 md:px-12 lg:px-16">
-        
-        {/* ENCABEZADO */}
-        <div className="mb-14 text-center md:text-left">
-          <span className="text-xs font-bold text-impulso-orange tracking-widest uppercase font-outfit block mb-3">
-            NUESTRO PORTAFOLIO
+    <section
+      id="proyectos"
+      className="bg-[#f5f3ef] text-gray-900 w-full overflow-hidden"
+    >
+      {/* ── ENCABEZADO DE SECCIÓN ──────────────────────────────────── */}
+      <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 pt-24 pb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div>
+          <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-4">
+            Portafolio
           </span>
-          <h2 className="font-outfit text-3xl md:text-5xl font-black uppercase tracking-wider text-gray-900">
-            Proyectos <span className="text-impulso-orange">Destacados</span>
+          <h2
+            className="font-outfit font-black text-gray-900 leading-none tracking-tighter"
+            style={{ fontSize: "clamp(2.5rem, 6vw, 5.5rem)" }}
+          >
+            Proyectos
+            <br />
+            <span className="text-impulso-orange">Seleccionados</span>
           </h2>
-          <div className="w-20 h-1 bg-impulso-orange mt-4 mx-auto md:mx-0"></div>
         </div>
+        <p className="font-raleway text-gray-500 text-sm leading-relaxed max-w-xs md:text-right">
+          Cada obra es el resultado de un proceso riguroso que equilibra función,
+          materialidad y contexto.
+        </p>
+      </div>
 
-        {/* 💻 CONSOLA DE FILTROS PREMIUM */}
-        <div className="hidden lg:flex justify-center mb-20 w-full">
-          <div className="inline-flex items-center bg-gray-50/80 backdrop-blur-md p-2 rounded-2xl border border-gray-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.01)] gap-1.5 relative">
-            {CATEGORIAS.map((cat) => {
-              const esActivo = categoriaActiva === cat.id;
-              const count = getCount(cat.id); // Cálculo automático aquí
+      {/* ── DIVISOR ────────────────────────────────────────────────── */}
+      <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24">
+        <div className="w-full h-px bg-gray-300" />
+      </div>
 
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => setCategoriaActiva(cat.id)}
-                  className={`flex items-center gap-2.5 px-5 py-3 rounded-xl transition-all duration-300 relative group cursor-pointer font-outfit text-xs font-bold uppercase tracking-wider ${
-                    esActivo
-                      ? "bg-[#02184c] text-white shadow-md shadow-[#02184c]/10 scale-[1.02]"
-                      : "text-gray-500 hover:text-[#02184c] hover:bg-gray-200/50"
+      {/* ── LISTA DE PROYECTOS ─────────────────────────────────────── */}
+      <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24">
+        {PROYECTOS.map((proj, idx) => {
+          const esInvertido = idx % 2 !== 0;
+          return (
+            <article
+              key={proj.id}
+              className="py-20 md:py-28 border-b border-gray-300 last:border-b-0"
+            >
+              <div
+                className={`flex flex-col ${
+                  esInvertido ? "lg:flex-row-reverse" : "lg:flex-row"
+                } gap-10 lg:gap-16 items-start`}
+              >
+                {/* FOTO */}
+                <div
+                  className="w-full lg:w-[58%] overflow-hidden relative group cursor-pointer flex-shrink-0"
+                  onClick={() => onVerProyecto?.(proj.slug)}
+                >
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={proj.img}
+                      alt={proj.titulo}
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    />
+                  </div>
+                  {/* Overlay sutil al hover */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
+
+                  {/* Tipo de proyecto sobre la imagen */}
+                  <div className="absolute top-5 left-5 bg-white/90 backdrop-blur-sm px-3 py-1.5">
+                    <span className="font-outfit text-[10px] font-bold uppercase tracking-[3px] text-gray-900">
+                      {proj.tipo}
+                    </span>
+                  </div>
+                </div>
+
+                {/* TEXTO */}
+                <div
+                  className={`flex-1 flex flex-col justify-center ${
+                    esInvertido ? "lg:items-end lg:text-right" : ""
                   }`}
                 >
-                  <i className={`fa-solid ${cat.icon} text-sm transition-transform duration-300 ${
-                      esActivo ? "text-impulso-orange scale-110" : "text-gray-400 group-hover:scale-110 group-hover:text-impulso-orange"
-                    }`}
-                  ></i>
-                  <span className="font-medium font-raleway tracking-wide transition-colors">{cat.label}</span>
-                  
-                  {/* Contador automático */}
-                  <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full font-outfit transition-all duration-300 ${
-                      esActivo ? "bg-white/15 text-white" : "bg-gray-200/70 text-gray-400 group-hover:bg-impulso-orange/10 group-hover:text-impulso-orange"
-                    }`}
+                  {/* Número de proyecto */}
+                  <span
+                    className="font-outfit font-black text-gray-200 leading-none mb-2 select-none"
+                    style={{ fontSize: "clamp(4rem, 8vw, 7rem)" }}
+                    aria-hidden="true"
                   >
-                    {count.toString().padStart(2, '0')}
+                    {proj.indice}
                   </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
 
-        {/* PROYECTOS */}
-        <div ref={containerRef} className="flex flex-col gap-24 md:gap-32 min-h-fit w-full px-4 md:px-0">
-          {proyectosFiltrados.length > 0 ? (
-            proyectosFiltrados.map((proj, idx) => {
-              const esInvertido = idx % 2 !== 0;
-              return (
-                <div key={proj.id} className={`proyecto-row flex flex-col md:flex-row items-center relative w-full max-w-[1100px] mx-auto transform transition-all duration-700 ease-out opacity-0 translate-y-12 scale-95 ${esInvertido ? "md:flex-row-reverse" : ""}`}>
-                  <div className="w-full md:w-[75%] h-[350px] sm:h-[450px] md:h-[500px] overflow-hidden shadow-2xl relative group border border-gray-100 rounded-l z-10">
-                    <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500 z-10" />
-                    <div className="absolute top-4 right-4 z-20 bg-black/60 backdrop-blur-md text-white font-outfit text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-lg border border-white/10 shadow-md flex items-center gap-1.5">
-                      <i className="fa-solid fa-location-dot text-impulso-orange"></i>
-                      <span>{proj.ciudad}</span>
-                    </div>
-                    <img src={proj.img} alt={proj.title} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
-                  </div>
-                  <div className={`w-[90%] md:w-[40%] bg-white p-8 md:p-10 lg:p-12 shadow-[0_30px_60px_rgba(0,0,0,0.15)] border border-gray-100 rounded-xl z-20 -mt-20 md:mt-0 flex flex-col items-start ${esInvertido ? "md:mr-0 md:-ml-24 lg:-ml-32 text-left" : "md:ml-0 md:-mr-24 lg:-mr-32 text-left"}`}>
-                    <span className="text-xs font-bold text-impulso-orange tracking-widest uppercase font-outfit">{proj.categoryLabel}</span>
-                    <h3 className="text-2xl md:text-3xl font-black mt-3 font-outfit text-gray-900 tracking-tight">{proj.title}</h3>
-                    <p className="text-gray-600 mt-4 text-sm md:text-base leading-relaxed font-raleway font-medium">{proj.desc}</p>
-                    <button onClick={() => onVerProyecto && onVerProyecto(proj.slug)} className="mt-8 inline-flex items-center justify-center px-6 py-3 border border-gray-900 text-gray-900 font-raleway text-xs font-bold uppercase tracking-widest rounded bg-transparent hover:text-impulso-orange hover:border-impulso-orange hover:bg-gray-50 transition-all duration-300 group/btn cursor-pointer">
-                      Ver Proyecto <i className="fa-solid fa-arrow-right-long ml-2.5"></i>
+                  {/* Título */}
+                  <h3
+                    className="font-outfit font-black text-gray-900 leading-none tracking-tighter mb-3"
+                    style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)" }}
+                  >
+                    {proj.titulo}
+                  </h3>
+
+                  {/* Lugar */}
+                  <p className="font-outfit text-[10px] font-bold uppercase tracking-[4px] text-impulso-orange mb-6">
+                    {proj.lugar}
+                  </p>
+
+                  {/* Divisor corto */}
+                  <div
+                    className={`w-12 h-px bg-gray-400 mb-6 ${
+                      esInvertido ? "lg:ml-auto" : ""
+                    }`}
+                  />
+
+                  {/* Concepto */}
+                  <p className="font-raleway text-gray-600 text-sm md:text-base leading-relaxed max-w-sm">
+                    {proj.concepto}
+                  </p>
+
+                  {/* CTA */}
+                  <div className={`mt-10 ${esInvertido ? "lg:flex lg:justify-end" : ""}`}>
+                    <button
+                      onClick={() => onVerProyecto?.(proj.slug)}
+                      className="group inline-flex items-center gap-3 cursor-pointer border border-gray-900 px-6 py-3 hover:bg-gray-900 hover:border-gray-900 transition-all duration-300"
+                    >
+                      <span className="font-outfit text-[11px] font-bold uppercase tracking-[4px] text-gray-900 group-hover:text-white transition-colors duration-300">
+                        Ver proyecto
+                      </span>
+                      <i className="fa-solid fa-arrow-right-long text-gray-900 group-hover:text-impulso-orange text-xs transition-all duration-300 group-hover:translate-x-1" />
                     </button>
                   </div>
                 </div>
-              );
-            })
-          ) : (
-            <div className="w-full text-center py-20">
-              <h3 className="text-gray-400 font-outfit text-xl font-bold uppercase">Aún no disponible</h3>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* DOCK FLOTANTE MÓVIL */}
-      <div className="lg:hidden fixed bottom-6 right-4 sm:right-6 w-[72%] max-w-[300px] bg-[#02184c]/95 backdrop-blur-lg border border-white/20 p-2 rounded-2xl shadow-[0_20px_50px_rgba(2,24,76,0.3)] z-50 flex justify-between items-center">
-        {CATEGORIAS.map((cat) => {
-          const esActivo = categoriaActiva === cat.id;
-          return (
-            <button key={cat.id} onClick={() => setCategoriaActiva(cat.id)} className={`flex flex-col items-center justify-center flex-1 py-1.5 rounded-xl transition-all ${esActivo ? "text-white scale-110 font-bold" : "text-white/60"}`}>
-              <i className={`fa-solid ${cat.icon} text-sm`}></i>
-              <span className="text-[8px] font-bold uppercase tracking-tighter mt-1 block max-w-[50px] text-center truncate">{cat.id === "todos" ? "Todos" : cat.label.split(" ")[0]}</span>
-            </button>
+              </div>
+            </article>
           );
         })}
       </div>
-    </div>
+
+      {/* ── CIERRE DE SECCIÓN ──────────────────────────────────────── */}
+      <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 py-16 flex flex-col md:flex-row items-center justify-between gap-6">
+        <p className="font-raleway text-gray-400 text-xs uppercase tracking-widest">
+          Impulso Proyectistas e Ingenieros S.A.C.
+        </p>
+        <button
+          onClick={() => onVerProyecto?.("torre-leguia")}
+          className="inline-flex items-center gap-3 group cursor-pointer"
+        >
+          <span className="font-outfit text-xs font-bold uppercase tracking-[4px] text-gray-500 group-hover:text-impulso-orange transition-colors duration-300">
+            Conoce todos los proyectos
+          </span>
+          <i className="fa-solid fa-arrow-right-long text-gray-400 group-hover:text-impulso-orange group-hover:translate-x-1 transition-all duration-300 text-xs" />
+        </button>
+      </div>
+    </section>
   );
 }

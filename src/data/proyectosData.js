@@ -3,7 +3,7 @@ export const DETALLES_PROYECTOS = {
     nombre: "Torre Leguía",
     ubicacionCorta: "Huaraz, Ancash",
     conceptoText:
-      "En Impulso conceptualizamos y diseñamos Torre Leguía, un hito arquitectónico en Huaraz. Desarrollamos una propuesta de vanguardia con optimización espacial de cada ambiente y acabados premium, equilibrando estética y funcionalidad.",
+      "Diseñado en colaboración con el estudio Brag Arquitectos, el proyecto plantea un edificio de uso mixto que integra comercio y vivienda en un solo volumen. Su fachada modular, compuesta por concreto, ladrillo y vidrio, refleja un lenguaje contemporáneo vinculado al contexto de Huaraz, mientras que la vegetación en la cubierta y los balcones aporta confort ambiental e integra el edificio con el paisaje andino.",
     stats: [
       { icono: "fa-building", valor: "12", label: "Pisos" },
       { icono: "fa-ruler-combined", valor: "85–120", label: "m² por depto" },
@@ -70,7 +70,7 @@ export const DETALLES_PROYECTOS = {
     ubicacionCorta: "Arequipa, Perú",
     link360: "https://app.lapentor.com/sphere/2-dormitorios-1781912320",
     conceptoText:
-      "En Impulso, priorizamos la calidad de vida: nuestro diseño arquitectónico de tres fachadas asegura una iluminación natural excepcional en cada rincón, creando ambientes cálidos, eficientes y funcionales. Un proyecto desarrollado para el bienestar de sus residentes y la optimización del espacio.",
+      "Diseñado con un enfoque modernista, el edificio destaca por su composición de líneas puras, fachadas limpias y una distribución funcional que prioriza la iluminación, la ventilación natural y el confort de sus residentes, integrándose de manera armónica al entorno urbano de Arequipa.",
     stats: [
       { icono: "fa-building", valor: "15", label: "Pisos" },
       { icono: "fa-ruler-combined", valor: "85–120", label: "m² por depto" },
@@ -133,7 +133,7 @@ export const DETALLES_PROYECTOS = {
     ubicacionCorta: "Huaraz, Ancash",
     link360: "https://app.lapentor.com/sphere/1-habitacin-plaza-27",
     conceptoText:
-      "Diseñado bajo estándares de eficiencia espacial y acabados premium, el proyecto integra una ubicación estratégica a pasos de la Plaza de Armas con la tranquilidad de un entorno residencial consolidado. Un espacio donde la vanguardia constructiva y la conectividad urbana convergen para elevar tu calidad de vida.",
+      "El proyecto responde a la monumentalidad de la Cordillera Blanca mediante una volumetría esbelta que enfatiza la verticalidad y lo consolida como un hito urbano. Su jerarquía volumétrica, materialidad contemporánea y ritmo compositivo establecen un diálogo con el paisaje andino, enmarcando las vistas hacia los nevados y proyectando una arquitectura de carácter atemporal.",
     stats: [
       { icono: "fa-building", valor: "12", label: "Pisos" },
       { icono: "fa-ruler-combined", valor: "85–120", label: "m² por depto" },
