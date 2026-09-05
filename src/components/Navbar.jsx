@@ -1,137 +1,180 @@
+// src/components/Navbar.jsx
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+
+const NAV_ITEMS = [
+  { label: "Proyectos",     action: "scroll", path: "/", id: "proyectos" },
+  { label: "Servicios",     action: "route",  path: "/servicios"         },
+  { label: "Obra",          action: "route",  path: "/obra"              },
+  { label: "Principios",    action: "route",  path: "/principios"        },
+  { label: "Publicaciones", action: "route",  path: "/publicaciones"     },
+  { label: "Contacto",      action: "route",  path: "/contacto"          },
+];
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen,     setIsOpen]     = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const navigate = useNavigate();
+  const navigate  = useNavigate();
+  const location  = useLocation();
 
-  // Detecta el movimiento del scroll para cambiar el diseño del header
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Bloquear scroll del body cuando el menú móvil está abierto
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
+  // Cerrar menú al cambiar de ruta
+  useEffect(() => { setIsOpen(false); }, [location.pathname]);
+
   const closeMenu = () => setIsOpen(false);
 
-  // Lógica para navegar a la home y luego hacer scroll a la sección
-  const handleNav = (path, elementId) => {
+  const handleNav = (item) => {
     closeMenu();
-    navigate(path);
-    
-    // Si hay un id de sección, hacemos scroll suave al cargar
-    if (elementId) {
+    if (item.action === "scroll") {
+      navigate(item.path);
       setTimeout(() => {
-        const element = document.getElementById(elementId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
+        const el = document.getElementById(item.id);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 150);
+    } else {
+      navigate(item.path);
     }
   };
 
+  const isActive = (item) => {
+    if (item.action === "scroll") return location.pathname === "/";
+    return location.pathname === item.path;
+  };
+
   return (
-    <header 
-      className={`fixed top-0 left-0 w-full z-[9999] transition-all duration-500 py-4 ${
-        isScrolled 
-          ? 'bg-white shadow-md border-b border-gray-100' 
-          : 'bg-transparent border-b border-transparent'
-      }`}
-    >
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10 flex justify-between items-center">
-        
-        {/* LOGO (Enlace a Inicio) */}
-        <Link to="/" className="flex items-center gap-2 group" onClick={closeMenu}>
-          <img 
-            src={isScrolled ? "/img/logo.png" : "/img/logo_blanco.png"} 
-            alt="Logo Impulso Proyectistas e Ingenieros" 
-            className="h-12 md:h-18 w-auto object-contain transition-all duration-500 group-hover:scale-105" 
-          />
-        </Link>
-        
-        {/* BOTÓN HAMBURGUESA MÓVIL (Tu estilo original recuperado) */}
-        <button 
-          onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden flex flex-col justify-between w-7 h-5 cursor-pointer z-[10001]"
-          aria-label="Menú"
-        >
-          <span className={`block w-full h-[3px] rounded transition-transform duration-300 ${
-            isOpen ? 'translate-y-2 rotate-45 bg-impulso-orange' : isScrolled ? 'bg-gray-800' : 'bg-white'
-          }`}></span>
-          <span className={`block w-full h-[3px] rounded transition-opacity duration-300 ${
-            isOpen ? 'opacity-0' : isScrolled ? 'bg-gray-800' : 'bg-white'
-          }`}></span>
-          <span className={`block w-full h-[3px] rounded transition-transform duration-300 ${
-            isOpen ? '-translate-y-2 -rotate-45 bg-impulso-orange' : isScrolled ? 'bg-gray-800' : 'bg-white'
-          }`}></span>
-        </button>
+    <>
+      {/* ── HEADER FIJO ───────────────────────────────────────────── */}
+      <header className={`fixed top-0 left-0 w-full z-[9999] transition-all duration-500 ${
+        isScrolled
+          ? 'bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-100 py-3'
+          : 'bg-transparent py-5'
+      }`}>
+        <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 flex justify-between items-center">
 
-        {/* ENLACES DE NAVEGACIÓN (Estilo original recuperado) */}
-        <div className={`fixed md:relative top-0 left-0 w-full md:w-auto h-screen md:h-auto flex items-center justify-center md:block transition-all duration-300 ${
-          isOpen 
-            ? 'opacity-100 visible translate-y-0 bg-impulso-dark/98' 
-            : 'opacity-0 md:opacity-100 invisible md:visible -translate-y-4 md:translate-y-0 bg-transparent'
-        }`}>
-          <nav className="flex flex-col md:flex-row gap-8 md:gap-9 text-center items-center">
-            
-            {/* 1. PROYECTOS (Scroll a #proyectos en la home) */}
-            <div className="relative group/item py-2 flex flex-col items-center">
-              <button 
-                onClick={() => handleNav('/', 'proyectos')}
-                className={`font-raleway text-xl md:text-xs font-bold uppercase tracking-widest relative group py-1 transition-colors duration-500 block cursor-pointer select-none ${
-                  isOpen 
-                    ? 'text-white' 
-                    : isScrolled ? 'text-gray-800 hover:text-impulso-orange' : 'text-white/90 hover:text-white'
+          {/* LOGO */}
+          <Link to="/" className="flex items-center z-10 relative" onClick={closeMenu}>
+            <img
+              src={isScrolled ? "/img/logo.png" : "/img/logo_blanco.png"}
+              alt="Impulso"
+              className="h-10 md:h-12 w-auto object-contain transition-all duration-500"
+            />
+          </Link>
+
+          {/* HAMBURGUESA — solo visible en móvil, siempre arriba del menú */}
+          <button
+            onClick={() => setIsOpen(prev => !prev)}
+            className="lg:hidden flex flex-col justify-between w-6 h-4 cursor-pointer relative z-[10002]"
+            aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+          >
+            <span className={`block w-full h-[2px] rounded-sm transition-all duration-300 origin-center ${
+              isOpen
+                ? 'translate-y-[7px] rotate-45 bg-white'
+                : isScrolled ? 'bg-gray-800' : 'bg-white'
+            }`} />
+            <span className={`block w-full h-[2px] rounded-sm transition-opacity duration-200 ${
+              isOpen ? 'opacity-0' : isScrolled ? 'bg-gray-800' : 'bg-white'
+            }`} />
+            <span className={`block w-full h-[2px] rounded-sm transition-all duration-300 origin-center ${
+              isOpen
+                ? '-translate-y-[7px] -rotate-45 bg-white'
+                : isScrolled ? 'bg-gray-800' : 'bg-white'
+            }`} />
+          </button>
+
+          {/* NAV DESKTOP */}
+          <nav className="hidden lg:flex items-center gap-8">
+            {NAV_ITEMS.map((item) => (
+              <button
+                key={item.label}
+                onClick={() => handleNav(item)}
+                className={`relative font-outfit text-[11px] font-bold uppercase tracking-[3px] transition-colors duration-300 cursor-pointer group py-1 ${
+                  isActive(item)
+                    ? 'text-impulso-orange'
+                    : isScrolled
+                      ? 'text-gray-700 hover:text-impulso-orange'
+                      : 'text-white/80 hover:text-white'
                 }`}
               >
-                Proyectos
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-impulso-orange transition-all duration-300 group-hover/item:w-full"></span>
+                {item.label}
+                <span className={`absolute bottom-0 left-0 h-px bg-impulso-orange transition-all duration-300 ${
+                  isActive(item) ? 'w-full' : 'w-0 group-hover:w-full'
+                }`} />
               </button>
-            </div>
-
-            {/* 2. SERVICIOS (Enlace a /servicios y scroll a #servicios) */}
-            <div className="relative group/item py-2 flex flex-col items-center">
-              <button 
-                onClick={() => handleNav('/servicios', 'servicios')}
-                className={`font-raleway text-xl md:text-xs font-bold uppercase tracking-widest relative group py-1 transition-colors duration-500 block cursor-pointer select-none ${
-                  isOpen 
-                    ? 'text-white' 
-                    : isScrolled ? 'text-gray-800 hover:text-impulso-orange' : 'text-white/90 hover:text-white'
-                }`}
-              >
-                Servicios
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-impulso-orange transition-all duration-300 group-hover/item:w-full"></span>
-              </button>
-            </div>
-
-            {/* 3. CONTACTO (Enlace directo a la ruta /contacto) */}
-            <div className="relative group/item py-2 flex flex-col items-center">
-              <Link 
-                to="/contacto"
-                onClick={closeMenu}
-                className={`font-raleway text-xl md:text-xs font-bold uppercase tracking-widest relative group py-1 transition-colors duration-500 block cursor-pointer select-none ${
-                  isOpen 
-                    ? 'text-white' 
-                    : isScrolled ? 'text-gray-800 hover:text-impulso-orange' : 'text-white/90 hover:text-white'
-                }`}
-              >
-                Contacto
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-impulso-orange transition-all duration-300 group-hover/item:w-full"></span>
-              </Link>
-            </div>
-
+            ))}
           </nav>
+
+        </div>
+      </header>
+
+      {/* ── PANEL MÓVIL — completamente independiente del header ─── */}
+      {/* Overlay de fondo */}
+      <div
+        className={`lg:hidden fixed inset-0 z-[10000] bg-gray-950 transition-all duration-400 ${
+          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        aria-hidden={!isOpen}
+      >
+        {/* Logo dentro del panel */}
+        <div className="absolute top-5 left-8">
+          <img src="/img/logo_blanco.png" alt="Impulso" className="h-10 w-auto object-contain" />
         </div>
 
+        {/* Links centrados verticalmente */}
+        <nav className="flex flex-col justify-center h-full px-8 pt-16 pb-12">
+          {NAV_ITEMS.map((item, i) => (
+            <button
+              key={item.label}
+              onClick={() => handleNav(item)}
+              className={`w-full text-left py-4 border-b border-white/8 last:border-0 cursor-pointer group transition-all duration-300 ${
+                isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+              }`}
+              style={{ transitionDelay: isOpen ? `${i * 60}ms` : '0ms' }}
+            >
+              <div className="flex items-center justify-between">
+                <span className={`font-outfit font-black uppercase tracking-tight transition-colors duration-200 ${
+                  isActive(item) ? 'text-impulso-orange' : 'text-white group-hover:text-impulso-orange'
+                }`} style={{ fontSize: 'clamp(1.8rem, 7vw, 3rem)' }}>
+                  {item.label}
+                </span>
+                <i className={`fa-solid fa-arrow-right text-sm transition-all duration-300 ${
+                  isActive(item) ? 'text-impulso-orange' : 'text-white/20 group-hover:text-impulso-orange group-hover:translate-x-1'
+                }`} />
+              </div>
+            </button>
+          ))}
+        </nav>
+
+        {/* Pie del panel */}
+        <div className="absolute bottom-8 left-8 right-8 flex items-center justify-between">
+          <span className="font-outfit text-[9px] font-bold uppercase tracking-[4px] text-white/25">
+            Proyectistas & Ingenieros S.A.C.
+          </span>
+          <a
+            href="https://wa.me/51959679522"
+            target="_blank"
+            rel="noreferrer"
+            className="font-outfit text-[9px] font-bold uppercase tracking-[4px] text-impulso-orange"
+            onClick={closeMenu}
+          >
+            +51 959 679 522
+          </a>
+        </div>
       </div>
-    </header>
+    </>
   );
 }

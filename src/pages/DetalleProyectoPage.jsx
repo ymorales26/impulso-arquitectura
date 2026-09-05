@@ -1,161 +1,72 @@
 // src/pages/DetalleProyectoPage.jsx
-import { useState, useCallback } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Mousewheel, EffectFade } from "swiper/modules";
+// Rediseño estilo 57uno.com / carmen.pe
+// — Fachada a pantalla completa
+// — Concepto y stats visibles de inmediato
+// — Galería dominante en scroll
+// — Planos y mapa al final, sin sidebar
+
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
-import "swiper/css";
-import "swiper/css/effect-fade";
-
-// ─────────────────────────────────────────────
-// BASE DE DATOS DE PROYECTOS
-// ─────────────────────────────────────────────
 import { DETALLES_PROYECTOS } from "../data/proyectosData";
-// ─────────────────────────────────────────────
-// MAPA — iframe directo con src (no dangerouslySetInnerHTML)
-// ─────────────────────────────────────────────
-function MapaEmbed({ mapaSrc, pois }) {
-  return (
-    <div className="flex flex-col gap-5">
-      {/* Mapa */}
-      <div className="w-full rounded-xl overflow-hidden border border-white/10 bg-white/5">
-        <iframe
-          src={mapaSrc}
-          width="100%"
-          height="380"
-          style={{ border: 0, display: "block" }}
-          allowFullScreen=""
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          title="Mapa del proyecto"
-        />
-      </div>
 
-      {/* POIs */}
-      {pois?.length > 0 && (
-        <div>
-          <h4 className="text-[10px] uppercase tracking-widest text-impulso-orange font-bold mb-3">
-            Puntos de interés cercanos
-          </h4>
-          <div className="grid grid-cols-1 gap-2">
-            {pois.map((poi, i) => (
-              <div
-                key={i}
-                className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/5"
-              >
-                <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
-                  <i
-                    className={`fa-solid ${poi.icono} text-impulso-orange text-xs`}
-                  />
-                </div>
-                <span className="text-sm text-gray-300 font-medium">
-                  {poi.nombre}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 // LIGHTBOX CON SLIDER
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 function LightboxSlider({ imagenes, indiceInicial, onClose }) {
   const [indice, setIndice] = useState(indiceInicial);
 
-  const anterior = useCallback(
-    () => setIndice((i) => (i - 1 + imagenes.length) % imagenes.length),
-    [imagenes.length],
-  );
-  const siguiente = useCallback(
-    () => setIndice((i) => (i + 1) % imagenes.length),
-    [imagenes.length],
-  );
+  const anterior  = useCallback(() => setIndice(i => (i - 1 + imagenes.length) % imagenes.length), [imagenes.length]);
+  const siguiente = useCallback(() => setIndice(i => (i + 1) % imagenes.length), [imagenes.length]);
 
-  const handleKey = useCallback(
-    (e) => {
-      if (e.key === "ArrowLeft") anterior();
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.key === "ArrowLeft")  anterior();
       if (e.key === "ArrowRight") siguiente();
-      if (e.key === "Escape") onClose();
-    },
-    [anterior, siguiente, onClose],
-  );
+      if (e.key === "Escape")     onClose();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [anterior, siguiente, onClose]);
 
   return (
-    <div
-      className="fixed inset-0 z-[10010] bg-black/95 flex items-center justify-center p-4"
-      onClick={onClose}
-      onKeyDown={handleKey}
-      tabIndex={0}
-    >
-      <div
-        className="relative w-full max-w-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Imagen principal */}
-        <div
-          className="relative rounded-xl overflow-hidden border border-white/10 bg-black/60"
-          style={{ maxHeight: "68vh" }}
-        >
-          <img
-            src={imagenes[indice]}
-            alt={`Vista ${indice + 1}`}
-            className="w-full h-auto object-contain"
-            style={{ maxHeight: "63vh" }}
-          />
-          {/* Contador */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-black/70 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">
-            {indice + 1} / {imagenes.length}
-          </div>
+    <div className="fixed inset-0 z-[10010] bg-black/97 flex items-center justify-center" onClick={onClose}>
+      <div className="relative w-full max-w-5xl px-4 md:px-16" onClick={e => e.stopPropagation()}>
+
+        <img
+          src={imagenes[indice]}
+          alt={`Vista ${indice + 1}`}
+          className="w-full max-h-[80vh] object-contain"
+        />
+
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 font-outfit text-[10px] font-bold tracking-[4px] uppercase text-white/50">
+          {String(indice + 1).padStart(2,"0")} / {String(imagenes.length).padStart(2,"0")}
         </div>
 
-        {/* Flechas */}
         {imagenes.length > 1 && (
           <>
-            <button
-              onClick={anterior}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-5 w-9 h-9 md:w-10 md:h-10 rounded-full bg-black/80 border border-white/20 text-white hover:border-impulso-orange hover:text-impulso-orange transition-all flex items-center justify-center shadow-xl"
-            >
-              <i className="fa-solid fa-chevron-left text-xs md:text-sm" />
+            <button onClick={anterior}  className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 border border-white/20 flex items-center justify-center text-white hover:border-impulso-orange hover:text-impulso-orange transition-all cursor-pointer">
+              <i className="fa-solid fa-chevron-left text-xs" />
             </button>
-            <button
-              onClick={siguiente}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-5 w-9 h-9 md:w-10 md:h-10 rounded-full bg-black/80 border border-white/20 text-white hover:border-impulso-orange hover:text-impulso-orange transition-all flex items-center justify-center shadow-xl"
-            >
-              <i className="fa-solid fa-chevron-right text-xs md:text-sm" />
+            <button onClick={siguiente} className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 border border-white/20 flex items-center justify-center text-white hover:border-impulso-orange hover:text-impulso-orange transition-all cursor-pointer">
+              <i className="fa-solid fa-chevron-right text-xs" />
             </button>
           </>
         )}
 
-        {/* Cerrar */}
-        <button
-          onClick={onClose}
-          className="absolute -top-3 -right-3 md:-top-4 md:-right-4 w-8 h-8 md:w-9 md:h-9 rounded-full bg-black/80 border border-white/20 text-gray-400 hover:text-white hover:border-white/40 transition-all flex items-center justify-center"
-        >
-          <i className="fa-solid fa-xmark text-xs md:text-sm" />
+        <button onClick={onClose} className="absolute top-0 right-4 md:right-16 w-10 h-10 border border-white/20 flex items-center justify-center text-white/60 hover:text-white transition-all cursor-pointer">
+          <i className="fa-solid fa-xmark text-sm" />
         </button>
 
-        {/* Miniaturas */}
         {imagenes.length > 1 && (
-          <div className="flex gap-1.5 mt-3 justify-center overflow-x-auto pb-1 px-2">
+          <div className="flex gap-2 mt-4 justify-center overflow-x-auto pb-1">
             {imagenes.map((img, i) => (
-              <button
-                key={i}
-                onClick={() => setIndice(i)}
-                className={`flex-shrink-0 w-10 h-8 md:w-12 md:h-9 rounded-md overflow-hidden border-2 transition-all ${
-                  i === indice
-                    ? "border-impulso-orange"
-                    : "border-white/20 opacity-50 hover:opacity-80"
-                }`}
+              <button key={i} onClick={() => setIndice(i)}
+                className={`flex-shrink-0 w-12 h-8 overflow-hidden border transition-all cursor-pointer ${i === indice ? "border-impulso-orange" : "border-white/20 opacity-40 hover:opacity-70"}`}
               >
-                <img
-                  src={img}
-                  alt={`Miniatura ${i + 1}`}
-                  className="w-full h-full object-cover"
-                />
+                <img src={img} alt="" className="w-full h-full object-cover" />
               </button>
             ))}
           </div>
@@ -165,101 +76,29 @@ function LightboxSlider({ imagenes, indiceInicial, onClose }) {
   );
 }
 
-// ─────────────────────────────────────────────
-// GRID DE IMÁGENES (planos y galería)
-// ─────────────────────────────────────────────
-function GridImagenes({ imagenes, onClickImg, labelPrefix = "Vista" }) {
-  return (
-    <div className="grid grid-cols-2 gap-2 sm:gap-3">
-      {imagenes?.map((img, i) => (
-        <div
-          key={i}
-          className="relative overflow-hidden rounded-xl border border-white/10 cursor-zoom-in group bg-white/5"
-          style={{ aspectRatio: "4/3" }}
-          onClick={() => onClickImg(i)}
-        >
-          <img
-            src={img}
-            alt={`${labelPrefix} ${i + 1}`}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-          />
-          {/* Overlay lupa */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-200 flex items-center justify-center">
-            <i className="fa-solid fa-magnifying-glass-plus text-white text-lg md:text-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-          </div>
-          {/* Etiqueta */}
-          <div className="absolute bottom-1.5 left-1.5 bg-black/70 text-white text-[9px] md:text-[10px] px-1.5 md:px-2 py-0.5 rounded-full backdrop-blur-sm">
-            {labelPrefix} {i + 1}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 // COMPONENTE PRINCIPAL
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 export default function DetalleProyectoPage({ onClose }) {
   const { slug } = useParams();
-  const [activeSidebar, setActiveSidebar] = useState(null);
-  const [lightbox, setLightbox] = useState(null);
+  const [lightbox,  setLightbox]  = useState(null);
+  const [headerVis, setHeaderVis] = useState(false);
 
-  const proyectoData =
-    DETALLES_PROYECTOS[slug] || DETALLES_PROYECTOS["torre-leguia"];
+  const proyectoData = DETALLES_PROYECTOS[slug] || DETALLES_PROYECTOS["torre-leguia"];
 
-  const abrirLightbox = (imagenes, indice = 0) =>
-    setLightbox({ imagenes, indice });
+  useEffect(() => { setTimeout(() => setHeaderVis(true), 80); }, []);
 
-  // ── Sidebar contenedor ──────────────────────────────────────────────────
-  const renderSidebarContainer = (id, titulo, contenido) => (
-    <>
-      {/* Backdrop */}
-      <div
-        onClick={() => setActiveSidebar(null)}
-        className={`fixed inset-0 z-50 transition-opacity duration-300 ${
-          activeSidebar === id
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        }`}
-      />
-      {/* Panel */}
-      <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-[500px] md:w-[600px] bg-[#000d26] border-l border-white/10 z-[10000] flex flex-col transition-transform duration-500 ease-in-out ${
-          activeSidebar === id ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        {/* Header fijo */}
-        <div className="flex items-center justify-between border-b border-white/10 px-6 py-4 md:px-8 flex-shrink-0">
-          <h2 className="font-outfit text-xl font-bold tracking-tight text-white uppercase">
-            {titulo}
-          </h2>
-          <button
-            onClick={() => setActiveSidebar(null)}
-            className="text-gray-400 hover:text-impulso-orange text-sm font-bold uppercase tracking-widest cursor-pointer flex items-center gap-2 transition-colors"
-          >
-            CERRAR <i className="fa-solid fa-xmark" />
-          </button>
-        </div>
+  const abrirLightbox = (imagenes, indice = 0) => setLightbox({ imagenes, indice });
 
-        {/* Contenido scrolleable */}
-        <div className="flex-1 overflow-y-auto px-6 py-5 md:px-8 md:py-6 space-y-4">
-          {contenido}
-        </div>
-
-        {/* Footer fijo */}
-        <div className="px-6 py-3 md:px-8 border-t border-white/5 flex-shrink-0">
-          <p className="text-[10px] text-gray-600">
-            Impulso Proyectistas e Ingenieros
-          </p>
-        </div>
-      </div>
-    </>
-  );
+  const fotosHero    = proyectoData.imagenesFondo || [];
+  const fotosGaleria = proyectoData.fotosGaleria?.length ? proyectoData.fotosGaleria : fotosHero;
+  const planos       = proyectoData.planosImgs    || [];
 
   return (
-    <div className="min-h-screen bg-[#000714] text-white relative font-raleway overflow-y-auto lg:overflow-hidden">
-      {/* LIGHTBOX */}
+    <>
+    <Navbar />
+    <div className="min-h-screen bg-[#f5f3ef] text-gray-900 font-raleway selection:bg-impulso-orange selection:text-white">
+
       {lightbox && (
         <LightboxSlider
           imagenes={lightbox.imagenes}
@@ -268,257 +107,328 @@ export default function DetalleProyectoPage({ onClose }) {
         />
       )}
 
-      {/* BOTÓN VOLVER */}
-      <button
-        onClick={onClose}
-        className="fixed top-6 left-6 md:top-8 md:left-8 z-50 flex items-center gap-2 text-[10px] md:text-xs font-bold uppercase tracking-widest text-white/80 hover:text-impulso-orange transition-colors cursor-pointer bg-black/80 px-4 py-2.5 md:px-5 rounded-full border border-white/10 shadow-2xl"
-      >
-        <i className="fa-solid fa-arrow-left" /> Volver al Portafolio
-      </button>
+      {/* ── 1. HERO — FACHADA PANTALLA COMPLETA ────────────────────── */}
+      <section className="relative w-full h-screen min-h-[600px] overflow-hidden bg-black">
+        <img
+          src={fotosHero[0]}
+          alt={proyectoData.nombre}
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{
+            transform: headerVis ? "scale(1.04)" : "scale(1)",
+            transition: "transform 8000ms ease-out",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
 
-      {/* SLIDER DE FONDO */}
-      <div className="absolute inset-0 w-full h-full lg:h-screen z-0 pointer-events-none">
-        <Swiper
-          direction="vertical"
-          mousewheel={{ releaseOnEdges: true }}
-          nested
-          effect="fade"
-          modules={[Mousewheel, EffectFade]}
-          className="w-full h-full"
+        {/* Nombre + meta */}
+        <div
+          className={`absolute bottom-0 left-0 right-0 px-8 md:px-16 lg:px-24 pb-14 transition-all duration-1000 ${headerVis ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
-          {proyectoData.imagenesFondo.map((img, index) => (
-            <SwiperSlide key={index} className="w-full h-full relative">
-              <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#000714] lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-black/80 z-10" />
-              <img
-                src={img}
-                alt={`${proyectoData.nombre} - vista ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+          <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-4">
+            {proyectoData.ubicacionCorta}
+          </span>
+          <h1
+            className="font-outfit font-black text-white leading-none tracking-tighter mb-6"
+            style={{ fontSize: "clamp(3.5rem, 9vw, 9rem)" }}
+          >
+            {proyectoData.nombre}
+          </h1>
 
-      {/* INTERFAZ PRINCIPAL */}
-      <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-10 min-h-screen lg:h-screen flex flex-col justify-center py-28 lg:py-0">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center w-full">
-          {/* IZQUIERDA */}
-          <div className="lg:col-span-6 space-y-3 text-center lg:text-left">
-            <span className="text-impulso-orange font-outfit text-xs font-bold uppercase tracking-widest block">
-              Proyecto Destacado
-            </span>
-            <h1 className="font-outfit text-3xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight uppercase break-words">
-              {proyectoData.nombre}
-            </h1>
-            <p className="text-gray-300 text-sm md:text-base flex items-center justify-center lg:justify-start gap-2 font-medium">
-              <i className="fa-solid fa-location-dot text-impulso-orange text-xs" />
-              {proyectoData.ubicacionCorta}
-            </p>
-
-            {/* BOTÓN NUEVO: Solo aparece si el proyecto tiene link360 */}
-            {proyectoData.link360 && (
-              <a
-                href={proyectoData.link360}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 bg-impulso-orange text-white text-[10px] md:text-xs font-bold uppercase tracking-widest px-5 py-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 shadow-lg border border-impulso-orange"
-              >
-                <i className="fa-solid fa-vr-cardboard" /> Ver Recorrido 360°
-              </a>
-            )}
-          </div>
-
-          {/* DERECHA: CARDS */}
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 w-full lg:max-w-md lg:justify-self-end">
-            <div
-              onClick={() => setActiveSidebar("concepto")}
-              className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-5 flex flex-col justify-between relative group transition-all duration-300 hover:border-impulso-orange/50 cursor-pointer"
-            >
-              <div>
-                <h3 className="font-outfit text-xs font-bold uppercase tracking-wider text-impulso-orange mb-1.5">
-                  01 / Arquitectura
-                </h3>
-                <h4 className="font-outfit text-base md:text-lg font-bold text-white mb-1">
-                  Concepto de Diseño
-                </h4>
-                <p className="text-gray-400 text-xs line-clamp-2">
-                  Explora los fundamentos y pilares que dieron vida a esta
-                  infraestructura.
-                </p>
-              </div>
-              <span className="absolute bottom-4 right-4 text-gray-400 group-hover:text-impulso-orange transition-colors">
-                <i className="fa-solid fa-plus text-xs" />
-              </span>
+          {/* Stats breves + scroll cue */}
+          <div className="flex items-end justify-between">
+            <div className="flex items-center gap-8">
+              {proyectoData.stats?.slice(0, 3).map((s, i) => (
+                <div key={i}>
+                  <p className="font-outfit font-black text-white text-lg md:text-2xl leading-none">{s.valor}</p>
+                  <p className="font-outfit text-[9px] font-bold uppercase tracking-[3px] text-white/40 mt-1">{s.label}</p>
+                </div>
+              ))}
             </div>
-
-            <div
-              onClick={() => setActiveSidebar("planos")}
-              className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-5 flex flex-col justify-between relative group transition-all duration-300 hover:border-impulso-orange/50 cursor-pointer"
-            >
-              <div>
-                <h3 className="font-outfit text-xs font-bold uppercase tracking-wider text-impulso-orange mb-1.5">
-                  02 / Estructuras
-                </h3>
-                <h4 className="font-outfit text-base md:text-lg font-bold text-white mb-1">
-                  Planos & Distribución
-                </h4>
-                <p className="text-gray-400 text-xs line-clamp-2">
-                  Visualiza las plantas arquitectónicas, metrados y distribución
-                  técnica.
-                </p>
+            {/* Indicador scroll */}
+            <div className="hidden md:flex flex-col items-center gap-2 pb-2">
+              <div className="w-px h-12 bg-white/15 relative overflow-hidden">
+                <div className="absolute top-0 left-0 right-0 bg-impulso-orange" style={{ height: "40%", animation: "scrollLine 2s ease-in-out infinite" }} />
               </div>
-              <span className="absolute bottom-4 right-4 text-gray-400 group-hover:text-impulso-orange transition-colors">
-                <i className="fa-solid fa-plus text-xs" />
-              </span>
-            </div>
-
-            <div
-              onClick={() => setActiveSidebar("ubicacion")}
-              className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-5 flex flex-col justify-between relative group transition-all duration-300 hover:border-impulso-orange/50 cursor-pointer"
-            >
-              <div>
-                <h3 className="font-outfit text-xs font-bold uppercase tracking-wider text-impulso-orange mb-1.5">
-                  03 / Ingeniería
-                </h3>
-                <h4 className="font-outfit text-base md:text-lg font-bold text-white mb-1">
-                  Geolocalización
-                </h4>
-                <p className="text-gray-400 text-xs line-clamp-2">
-                  Ubicación exacta del desarrollo inmobiliario o de la obra
-                  ejecutada.
-                </p>
-              </div>
-              <span className="absolute bottom-4 right-4 text-gray-400 group-hover:text-impulso-orange transition-colors">
-                <i className="fa-solid fa-plus text-xs" />
-              </span>
-            </div>
-
-            <div
-              onClick={() => setActiveSidebar("galeria")}
-              className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-5 flex flex-col justify-between relative group transition-all duration-300 hover:border-impulso-orange/50 cursor-pointer sm:col-span-2 lg:col-span-1"
-            >
-              <div>
-                <h3 className="font-outfit text-xs font-bold uppercase tracking-wider text-impulso-orange mb-2">
-                  04 / Multimedia
-                </h3>
-                <h4 className="font-outfit text-lg font-bold text-white mb-1">
-                  Galería del Proyecto
-                </h4>
-                <p className="text-gray-400 text-xs line-clamp-2">
-                  Inspecciona capturas de avance de obra, renders y acabados
-                  finales.
-                </p>
-              </div>
-              <span className="absolute bottom-4 right-4 text-gray-400 group-hover:text-impulso-orange transition-colors">
-                <i className="fa-solid fa-plus text-xs" />
-              </span>
+              <span className="font-outfit text-[8px] font-bold uppercase tracking-[4px] text-white/30">Scroll</span>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* ── SIDEBAR 1: CONCEPTO ─────────────────────────────────── */}
-      {activeSidebar === "concepto" &&
-        renderSidebarContainer(
-          "concepto",
-          "El Concepto",
-          <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-3">
-              {proyectoData.stats?.map((stat, i) => (
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-white/10" />
+      </section>
+
+      {/* ── 2. CONCEPTO ─────────────────────────────────────────────── */}
+      <section className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 py-20 md:py-28">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+
+          <div className="lg:col-span-4">
+            <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-5">
+              Concepto
+            </span>
+            <h2
+              className="font-outfit font-black text-gray-900 leading-none tracking-tighter"
+              style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)" }}
+            >
+              {proyectoData.nombre}
+            </h2>
+          </div>
+
+          <div className="lg:col-span-8">
+            <p className="font-raleway text-gray-600 text-base md:text-lg leading-relaxed mb-10">
+              {proyectoData.conceptoText}
+            </p>
+            {proyectoData.caracteristicas?.length > 0 && (
+              <ul className="grid sm:grid-cols-2 gap-3 mt-8">
+                {proyectoData.caracteristicas.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-gray-600">
+                    <div className="w-px h-4 bg-impulso-orange flex-shrink-0 mt-0.5" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+
+        {/* Stats horizontales */}
+        {proyectoData.stats?.length > 0 && (
+          <div className="mt-16 pt-10 border-t border-gray-300 grid grid-cols-2 md:grid-cols-4 gap-0">
+            {proyectoData.stats.map((s, i) => (
+              <div
+                key={i}
+                className={`py-6 ${i < proyectoData.stats.length - 1 ? "border-r border-gray-300" : ""}`}
+                style={{ paddingLeft: i > 0 ? "2rem" : 0, paddingRight: i < proyectoData.stats.length - 1 ? "2rem" : 0 }}
+              >
+                <p className="font-outfit font-black text-gray-900 leading-none" style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}>
+                  {s.valor}
+                </p>
+                <p className="font-outfit text-[10px] font-bold uppercase tracking-[3px] text-impulso-orange mt-2">
+                  {s.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* ── 3. GALERÍA — IMÁGENES DOMINANTES ───────────────────────── */}
+      {fotosGaleria.length > 0 && (
+        <section className="border-t border-gray-300">
+          <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 pt-16 pb-8 flex items-end justify-between">
+            <div>
+              <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-3">Multimedia</span>
+              <h2 className="font-outfit font-black text-gray-900 leading-none tracking-tighter" style={{ fontSize: "clamp(1.8rem, 3.5vw, 3rem)" }}>
+                Galería del proyecto
+              </h2>
+            </div>
+            <span className="font-outfit text-[10px] text-gray-400 tracking-[3px] uppercase hidden md:block">
+              {fotosGaleria.length} imágenes
+            </span>
+          </div>
+
+          <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 mb-6">
+            <div className="w-full h-px bg-gray-300" />
+          </div>
+
+          {/* Grid editorial alternado */}
+          <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 pb-20">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
+              {fotosGaleria.map((foto, i) => {
+                // Primera imagen grande (8 col), segunda pequeña (4 col), resto en 4
+                const colSpan = i === 0 ? "md:col-span-8" : i === 1 ? "md:col-span-4" : "md:col-span-4";
+                const altura  = i === 0 || i === 1 ? "h-[300px] md:h-[560px]" : "h-[260px]";
+                return (
+                  <div
+                    key={i}
+                    className={`${colSpan} ${altura} overflow-hidden relative group cursor-zoom-in`}
+                    onClick={() => abrirLightbox(fotosGaleria, i)}
+                  >
+                    <img
+                      src={foto}
+                      alt={`${proyectoData.nombre} ${i + 1}`}
+                      className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-500 flex items-center justify-center">
+                      <i className="fa-solid fa-magnifying-glass-plus text-white text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+                    <div className="absolute bottom-3 left-3 font-outfit text-[9px] font-bold tracking-[3px] text-white/60 bg-black/40 px-2 py-0.5 backdrop-blur-sm">
+                      {String(i + 1).padStart(2,"0")}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── 4. PLANOS TÉCNICOS ──────────────────────────────────────── */}
+      {planos.length > 0 && (
+        <section className="border-t border-gray-300 bg-white">
+          <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 pt-16 pb-8 flex items-end justify-between">
+            <div>
+              <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-3">Estructuras</span>
+              <h2 className="font-outfit font-black text-gray-900 leading-none tracking-tighter" style={{ fontSize: "clamp(1.8rem, 3.5vw, 3rem)" }}>
+                Planos técnicos
+              </h2>
+            </div>
+            <span className="font-outfit text-[10px] text-gray-400 tracking-[3px] uppercase hidden md:block">{planos.length} planos</span>
+          </div>
+
+          <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 mb-6">
+            <div className="w-full h-px bg-gray-200" />
+          </div>
+
+          <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 pb-20">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+              {planos.map((img, i) => (
                 <div
                   key={i}
-                  className="bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col gap-2 hover:border-impulso-orange/40 transition-colors"
+                  className="aspect-[4/3] overflow-hidden relative group cursor-zoom-in bg-gray-100"
+                  onClick={() => abrirLightbox(planos, i)}
                 >
-                  <div className="w-9 h-9 rounded-lg bg-impulso-orange/10 border border-impulso-orange/20 flex items-center justify-center">
-                    <i
-                      className={`fa-solid ${stat.icono} text-impulso-orange text-sm`}
-                    />
+                  <img src={img} alt={`Plano ${i + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
+                    <i className="fa-solid fa-magnifying-glass-plus text-white text-lg opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
-                  <div>
-                    <p className="text-white font-outfit font-black text-2xl leading-none">
-                      {stat.valor}
-                    </p>
-                    <p className="text-gray-500 text-[11px] uppercase tracking-wider mt-0.5">
-                      {stat.label}
-                    </p>
+                  <div className="absolute bottom-2 left-2 font-outfit text-[9px] font-bold tracking-[3px] text-white/70 bg-black/50 px-1.5 py-0.5">
+                    P-{String(i + 1).padStart(2,"0")}
                   </div>
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+      )}
 
-            <div className="border-t border-white/10" />
+      {/* ── 5. MAPA + POIs ──────────────────────────────────────────── */}
+      {proyectoData.mapaSrc && (
+        <section className="border-t border-gray-300">
+          <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 pt-16 pb-8">
+            <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-3">Ubicación</span>
+            <h2 className="font-outfit font-black text-gray-900 leading-none tracking-tighter" style={{ fontSize: "clamp(1.8rem, 3.5vw, 3rem)" }}>
+              Geolocalización
+            </h2>
+          </div>
 
-            <div>
-              <h4 className="text-[10px] uppercase tracking-widest text-impulso-orange font-bold mb-2">
-                Descripción
-              </h4>
-              <p className="text-gray-300 text-sm leading-relaxed text-justify">
-                {proyectoData.conceptoText}
-              </p>
-            </div>
+          <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 mb-8">
+            <div className="w-full h-px bg-gray-300" />
+          </div>
 
-            {proyectoData.caracteristicas?.length > 0 && (
-              <div>
-                <h4 className="text-[10px] uppercase tracking-widest text-impulso-orange font-bold mb-3">
-                  Características
-                </h4>
-                <ul className="space-y-2">
-                  {proyectoData.caracteristicas.map((item, i) => (
-                    <li
-                      key={i}
-                      className="flex items-center gap-3 text-sm text-gray-300"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-impulso-orange flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+          <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 pb-20">
+            <div className="grid lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2 overflow-hidden border border-gray-200">
+                <iframe
+                  src={proyectoData.mapaSrc}
+                  width="100%" height="420"
+                  style={{ border: 0, display: "block", filter: "grayscale(20%) contrast(1.05)" }}
+                  allowFullScreen="" loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title={`Mapa de ${proyectoData.nombre}`}
+                />
               </div>
-            )}
-          </div>,
-        )}
+              {proyectoData.pois?.length > 0 && (
+                <div>
+                  <p className="font-outfit text-[10px] font-bold uppercase tracking-[4px] text-gray-400 mb-6">
+                    Puntos de interés cercanos
+                  </p>
+                  <ul className="space-y-4">
+                    {proyectoData.pois.map((poi, i) => (
+                      <li key={i} className="flex items-center gap-4 border-b border-gray-100 pb-4 last:border-0">
+                        <div className="w-8 h-8 border border-gray-200 flex items-center justify-center flex-shrink-0">
+                          <i className={`fa-solid ${poi.icono} text-impulso-orange text-xs`} />
+                        </div>
+                        <span className="font-raleway text-sm text-gray-600">{poi.nombre}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
 
-      {/* ── SIDEBAR 2: PLANOS ───────────────────────────────────── */}
-      {activeSidebar === "planos" &&
-        renderSidebarContainer(
-          "planos",
-          "Planos Técnicos",
-          <div className="space-y-4">
-            <p className="text-gray-500 text-xs">
-              Toca cualquier plano para ampliar. Usa las flechas para navegar.
-            </p>
-            <GridImagenes
-              imagenes={proyectoData.planosImgs}
-              onClickImg={(i) => abrirLightbox(proyectoData.planosImgs, i)}
-              labelPrefix="Plano"
-            />
-          </div>,
-        )}
+      {/* ── 6. CTA BANNER IMPACTANTE ────────────────────────────────── */}
+      <section className="relative overflow-hidden" style={{ minHeight: "420px" }}>
 
-      {/* ── SIDEBAR 3: GEOLOCALIZACIÓN ──────────────────────────── */}
-      {activeSidebar === "ubicacion" &&
-        renderSidebarContainer(
-          "ubicacion",
-          "Ubicación en Mapa",
-          <MapaEmbed mapaSrc={proyectoData.mapaSrc} pois={proyectoData.pois} />,
-        )}
+        {/* Imagen de fondo — edificio */}
+        <img
+          src={fotosHero[0]}
+          alt="Proyecto"
+          className="absolute inset-0 w-full h-full object-cover object-top"
+        />
 
-      {/* ── SIDEBAR 4: GALERÍA ──────────────────────────────────── */}
-      {activeSidebar === "galeria" &&
-        renderSidebarContainer(
-          "galeria",
-          "Galería de Avances",
-          <div className="space-y-4">
-            <p className="text-gray-500 text-xs">
-              Toca cualquier imagen para ampliar y navegar con las flechas.
-            </p>
-            <GridImagenes
-              imagenes={proyectoData.fotosGaleria}
-              onClickImg={(i) => abrirLightbox(proyectoData.fotosGaleria, i)}
-              labelPrefix="Captura"
-            />
-          </div>,
-        )}
+        {/* Capa oscura base */}
+        <div className="absolute inset-0 bg-black/70" />
+
+        {/* Forma diagonal naranja — panel izquierdo */}
+        <div
+          className="absolute inset-y-0 left-0 bg-gray-950"
+          style={{
+            width: "55%",
+            clipPath: "polygon(0 0, 100% 0, 82% 100%, 0 100%)",
+          }}
+        />
+        {/* Acento naranja — borde diagonal */}
+        <div
+          className="absolute inset-y-0 left-0"
+          style={{
+            width: "55%",
+            clipPath: "polygon(calc(100% - 6px) 0, 100% 0, 82% 100%, calc(82% - 5px) 100%)",
+            background: "linear-gradient(to bottom, #FF6B1A, #cc4d00)",
+          }}
+        />
+
+        {/* Textura grid técnica sobre el panel */}
+        <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ width: "55%" }}>
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid-cta" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="1"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid-cta)" />
+          </svg>
+        </div>
+
+        {/* Contenido sobre el panel */}
+        <div className="relative z-10 max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 py-20 md:py-24">
+          <div className="max-w-lg">
+            <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-5">
+              Estamos a un clic
+            </span>
+            <h3
+              className="font-outfit font-black text-white leading-none tracking-tighter mb-8"
+              style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)" }}
+            >
+              ¿Tienes un proyecto<br />en mente?
+            </h3>
+            <a
+              href="https://wa.me/51959679522?text=Hola%2C%20vi%20el%20proyecto%20y%20estoy%20interesado.%20Quisiera%20m%C3%A1s%20informaci%C3%B3n."
+              target="_blank"
+              rel="noreferrer"
+            className="inline-flex items-center gap-3 font-outfit text-xs font-bold uppercase tracking-[4px] px-7 py-3.5 cursor-pointer transition-all duration-300"
+              style={{ backgroundColor: "#FF6B1A", color: "#111827" }}
+              onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#FF6B1A"; e.currentTarget.style.color = "#ffffff"; }}
+              onMouseLeave={e => { e.currentTarget.style.backgroundColor = "#FF6B1A"; e.currentTarget.style.color = "#111827"; }}
+            >
+              <i className="fa-brands fa-whatsapp text-sm" />
+              Contáctanos
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <style>{`
+        @keyframes scrollLine {
+          0%   { transform: translateY(-100%); opacity: 1; }
+          100% { transform: translateY(250%);  opacity: 0; }
+        }
+      `}</style>
     </div>
+    <Footer />
+    </>
   );
 }
