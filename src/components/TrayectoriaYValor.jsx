@@ -41,7 +41,7 @@ const GRUPOS_TESTIMONIOS = [
   [
     { id: 4, iniciales: "AA", nombre: "Alejandro Alva",  cargo: "Propietario – Casa de Campo",       comentario: "El diseño bioclimático se adaptó genial al frío de la zona. Se nota la experiencia técnica en cada propuesta." },
     { id: 5, iniciales: "CP", nombre: "Carlos Palacios", cargo: "Constructor – Complejo Comercial",   comentario: "Los informes de supervisión técnica fueron impecables. Facilitaron el control de calidad con el contratista." },
-    { id: 6, iniciales: "NL", nombre: "Nancy Luna",      cargo: "Propietaria – Clínica Odontológica", comentario: "Excelente distribución de espacios en un terreno reducido. Muy enfocados en optimizar recursos." },
+    { id: 6, iniciales: "NL", nombre: "Nancy Luna",      cargo: "Propietaria – Clínica Odontológica", comentario: "Excelente distribución de espacios en un terreno reducido. Muy enfocados en optimizar los recursos." },
   ],
   [
     { id: 7, iniciales: "FR", nombre: "Fernando Rosales", cargo: "Inversionista – Departamentos",  comentario: "Un soporte legal y municipal A1. Nos ahorraron multas y retrasos gracias a que los planos estaban perfectos." },
