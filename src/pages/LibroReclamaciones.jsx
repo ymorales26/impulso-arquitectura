@@ -1,7 +1,7 @@
 // src/pages/LibroReclamaciones.jsx
 import { useState } from 'react';
 
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/myeyqypn";
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xqpkvaee";
 
 export default function LibroReclamaciones() {
   const [formData, setFormData] = useState({

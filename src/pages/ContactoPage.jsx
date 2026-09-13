@@ -14,7 +14,7 @@ export default function ContactoPage() {
     e.preventDefault();
     setEstadoEnvio({ enviando: true, exito: false, error: false });
     try {
-      const response = await fetch("https://formspree.io/f/xzbojnja", {
+      const response = await fetch("https://formspree.io/f/maeygnqn", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(formData),
