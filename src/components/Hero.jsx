@@ -33,7 +33,7 @@ const SLIDES = [
   },
   {
     id: 4,
-    img: "img/proyectos/aflora.webp",
+    img: "img/proyectos/afloraa.jpg",
     proyecto: "Aflora",
     lugar: "Arequipa, Perú",
     tipo: "Edificio Multifamiliar",

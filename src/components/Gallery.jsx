@@ -47,7 +47,7 @@ const PROYECTOS = [
     lugar: "Huaraz, Ancash",
     año: "2025",
     tipo: "Edificio Multifamiliar",
-    img: "img/proyectos/aflora.webp",
+    img: "img/proyectos/afloraa.jpg",
     concepto:
       "Ubicado en el distrito de Jose Luis Bustamante y Riveros, Arequipa – Arequipa, edificio Multifamiliar.",
   },

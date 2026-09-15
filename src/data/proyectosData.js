@@ -232,7 +232,7 @@ export const DETALLES_PROYECTOS = {
       "Lobby de diseño",
       "Vista 360° a la Cordillera",
     ],
-    imagenesFondo: ["/img/proyectos/aflora.webp"],
+    imagenesFondo: ["/img/proyectos/afloraa.jpg"],
     planosImgs: [
       "/img/aflora/aflora_planos01.jpg",
       "/img/aflora/aflora_planos02.jpg",
@@ -247,6 +247,7 @@ export const DETALLES_PROYECTOS = {
       { nombre: "Terminal Terrestre de Arequipa (12 min)", icono: "fa-bus" },
     ],
     fotosGaleria: [
+      "/img/proyectos/afloraa.jpg",
       "/img/proyectos/aflora.webp",
       "/img/aflora/aflora_galeria01.jpg",
       "/img/aflora/aflora_galeria02.jpg",

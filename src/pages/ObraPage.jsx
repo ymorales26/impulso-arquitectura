@@ -44,7 +44,7 @@ const OBRAS = [
     avance: 100,
     lugar: "Arequipa, Perú",
     año: "2025-2026",
-    img: "img/proyectos/aflora.webp",
+    img: "img/proyectos/afloraa.jpg",
     desc: "Donde la arquitectura dialoga con las cumbres: elegancia vertical que se eleva y perdura en el paisaje.",
   },
     {
