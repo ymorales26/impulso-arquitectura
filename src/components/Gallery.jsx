@@ -39,6 +39,30 @@ const PROYECTOS = [
     concepto:
       "El proyecto responde a la monumentalidad de la Cordillera Blanca mediante una volumetría esbelta que enfatiza la verticalidad y lo consolida como un hito urbano de carácter atemporal.",
   },
+  {
+    id: "aflora",
+    slug: "aflora",
+    indice: "04",
+    titulo: "Aflora",
+    lugar: "Huaraz, Ancash",
+    año: "2025",
+    tipo: "Edificio Multifamiliar",
+    img: "img/proyectos/aflora.webp",
+    concepto:
+      "Ubicado en el distrito de Jose Luis Bustamante y Riveros, Arequipa – Arequipa, edificio Multifamiliar.",
+  },
+  {
+    id: "JTU",
+    slug: "JTU",
+    indice: "05",
+    titulo: "JTU",
+    lugar: "Lima, Perú",
+    año: "2025-2026",
+    tipo: "Edificio Multifamiliar",
+    img: "img/proyectos/JTU.webp",
+    concepto:
+      "Proyecto de edificio multifamiliar que se integra en el entorno urbano de Lima, con un diseño moderno y funcional.",
+  }
 ];
 
 function ProyectoSlide({ proj, onVerProyecto, isActive, index }) {

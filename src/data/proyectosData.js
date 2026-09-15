@@ -221,8 +221,8 @@ export const DETALLES_PROYECTOS = {
     conceptoText:
       "El proyecto AFLORA es un edificio único, rodeado por más de 7 parques y muy bien ubicado, cerca de todo lo que necesitas. AFLORA contará Área de parrillas exclusiva para sus propietarios; además, todos los departamentos contarán con acabados excepcionales.",
     stats: [
-      { icono: "fa-building", valor: "12", label: "Pisos" },
-      { icono: "fa-ruler-combined", valor: "85–120", label: "m² por depto" },
+      { icono: "fa-building", valor: "8", label: "Pisos" },
+      { icono: "fa-ruler-combined", valor: "63–145", label: "m² por depto" },
       { icono: "fa-door-open", valor: "48", label: "Departamentos" },
       { icono: "fa-calendar-check", valor: "2026", label: "Entrega" },
     ],
@@ -248,9 +248,50 @@ export const DETALLES_PROYECTOS = {
     ],
     fotosGaleria: [
       "/img/proyectos/aflora.webp",
-      "/img/aflora/aflora_planos01.jpg",
-      "/img/aflora/aflora_planos02.jpg",
-      "/img/aflora/aflora_planos03.jpg",
+      "/img/aflora/aflora_galeria01.jpg",
+      "/img/aflora/aflora_galeria02.jpg",
+      "/img/aflora/aflora_galeria03.jpg",
+    ],
+  },
+
+  JTU: {
+    nombre: "JTU",
+    ubicacionCorta: "Lima, Perú",
+    conceptoText:
+      "El proyecto JTU es un edificio multifamiliar que se integra de manera armónica al entorno urbano de Lima, ofreciendo un diseño moderno y funcional que prioriza la comodidad y el bienestar de sus residentes.",
+    stats: [
+      { icono: "fa-building", valor: "6", label: "Pisos" },
+      { icono: "fa-ruler-combined", valor: "85–120", label: "m² por depto" },
+      { icono: "fa-door-open", valor: "12", label: "Departamentos" },
+      { icono: "fa-calendar-check", valor: "2026", label: "Entrega" },
+    ],
+    caracteristicas: [
+      "Ascensor panorámico",
+      "Estacionamiento",
+      "Lobby de diseño",
+      "Vista 360° a la ciudad",
+    ],
+
+    imagenesFondo: ["/img/proyectos/JTU.webp"],
+    planosImgs: [
+      "/img/JTU/JTU_galeria01.jpg",
+      "/img/JTU/JTU_galeria02.jpg",
+      "/img/JTU/JTU_galeria03.jpg",
+    ],
+    mapaSrc:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.936903204337!2d-77.04566938925635!3d-12.116469743153155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c97f51546729%3A0xa75b7a917fec26d6!2sJTU%20Edificio!5e0!3m2!1ses-419!2spe!4v1789435088749!5m2!1ses-419!2spe",
+    pois: [
+      { nombre: "Parque Flora Tristán (10 min)", icono: "fa-tree" },
+      { nombre: "Mall Aventura Arequipa (12 min)", icono: "fa-bag-shopping" },
+      { nombre: "Banco BCP (12 min)", icono: "fa-building-columns" },
+      { nombre: "Terminal Terrestre de Arequipa (12 min)", icono: "fa-bus" },
+    ],
+
+    fotosGaleria: [
+      "/img/proyectos/JTU.webp",
+      "/img/JTU/JTU_galeria01.jpg",
+      "/img/JTU/JTU_galeria02.jpg",
+      "/img/JTU/JTU_galeria03.jpg",
     ],
   },
 

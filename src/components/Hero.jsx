@@ -31,6 +31,24 @@ const SLIDES = [
     slug: "plaza27",
     indice: "03",
   },
+  {
+    id: 4,
+    img: "img/proyectos/aflora.webp",
+    proyecto: "Aflora",
+    lugar: "Arequipa, Perú",
+    tipo: "Edificio Multifamiliar",
+    slug: "aflora",
+    indice: "04",
+  },
+  {
+    id: 5,
+    img: "img/proyectos/JTU.webp",
+    proyecto: "JTU",
+    lugar: "Lima, Perú",
+    tipo: "Edificio Multifamiliar",
+    slug: "JTU",
+    indice: "05",
+  },
 ];
 
 export default function Hero() {
