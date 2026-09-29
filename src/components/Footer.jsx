@@ -111,7 +111,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <i className="fa-solid fa-clock text-impulso-orange text-xs flex-shrink-0" />
-                <span className="text-gray-400 text-xs">Lun – Vie: 9:00 am – 6:00 pm</span>
+                <span className="text-gray-400 text-xs">Lun – Vie: 8:00 am – 6:00 pm</span>
               </li>
             </ul>
 
