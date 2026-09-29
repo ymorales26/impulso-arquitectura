@@ -130,7 +130,7 @@ export default function PrincipiosPage() {
           </h2>
         </div>
 
-        <div className="max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24 mb-8">
+        <div className="max-w-[1300px]">
           <div className="w-full h-px bg-gray-300" />
         </div>
 

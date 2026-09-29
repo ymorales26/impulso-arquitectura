@@ -18,7 +18,7 @@ export default function Footer() {
       id="contacto"
       className="bg-gray-950 text-gray-400 font-raleway relative overflow-hidden"
     >
-      {/* Textura grid técnica — muy sutil */}
+      {/* Textura grid técnica */}
       <div className="absolute inset-0 opacity-[0.025] pointer-events-none z-0">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -33,27 +33,28 @@ export default function Footer() {
 
       <div className="relative z-10 max-w-[1300px] mx-auto px-8 md:px-16 lg:px-24">
 
-        {/* ── FRANJA SUPERIOR: marca grande ─────────────────────────── */}
+        {/* ── FRANJA SUPERIOR ─────────────────────────────────────────── */}
         <div className="border-b border-white/8 py-16 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
-          {/* Logo + claim */}
           <div>
             <img
               src="/img/logo_blanco.png"
-              alt="Impulso Proyectistas e Ingenieros"
+              alt="Impulso Proyectistas e Ingenieros S.A.C."
               className="h-14 w-auto object-contain mb-4"
             />
             <p className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange">
-              Proyectistas e Ingenieros S.A.C.
+              IMpulso Proyectistas e Ingenieros S.A.C.
+            </p>
+            {/* RUC visible para Google y SUNAT */}
+            <p className="font-outfit text-[10px] text-gray-600 tracking-[3px] uppercase mt-1">
+              RUC 20605257179
             </p>
           </div>
-
-          {/* Frase editorial */}
           <p className="font-raleway text-gray-500 text-sm leading-relaxed max-w-xs md:text-right">
             Diseño, ingeniería y gestión de proyectos con altos estándares de calidad en Huaraz y el Perú.
           </p>
         </div>
 
-        {/* ── CUERPO PRINCIPAL: 3 columnas ──────────────────────────── */}
+        {/* ── CUERPO PRINCIPAL: 3 columnas ────────────────────────────── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-b border-white/8">
 
           {/* COL 1 — Respaldo técnico */}
@@ -63,29 +64,25 @@ export default function Footer() {
             </span>
             <ul className="space-y-6">
               {[
-                { title: "Estándar Antisísmico",    desc: "Estructuras calculadas bajo rigurosa normativa de seguridad." },
-                { title: "Optimización de Recursos", desc: "Presupuestos y metrados precisos mediante tecnología BIM." },
-                { title: "Gestión Integral",         desc: "Acompañamiento desde el concepto hasta la entrega final." },
+                { title: "Estándar Antisísmico",     desc: "Estructuras calculadas bajo rigurosa normativa de seguridad." },
+                { title: "Optimización de Recursos",  desc: "Presupuestos y metrados precisos mediante tecnología BIM." },
+                { title: "Gestión Integral",          desc: "Acompañamiento desde el concepto hasta la entrega final." },
               ].map((item, i) => (
                 <li key={i}>
                   <div className="w-6 h-px bg-impulso-orange mb-3" />
-                  <p className="font-outfit text-white text-xs font-bold uppercase tracking-wider mb-1">
-                    {item.title}
-                  </p>
-                  <p className="font-raleway text-gray-500 text-xs leading-relaxed">
-                    {item.desc}
-                  </p>
+                  <p className="font-outfit text-white text-xs font-bold uppercase tracking-wider mb-1">{item.title}</p>
+                  <p className="font-raleway text-gray-500 text-xs leading-relaxed">{item.desc}</p>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* COL 2 — Contacto */}
+          {/* COL 2 — Contacto + datos legales */}
           <div className="py-14 md:px-12 md:border-r border-white/8">
             <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-8">
               Contacto
             </span>
-            <ul className="space-y-5 text-sm">
+            <ul className="space-y-5">
               <li className="flex items-start gap-3">
                 <i className="fa-solid fa-location-dot text-impulso-orange mt-0.5 flex-shrink-0 text-xs" />
                 <span className="text-gray-400 text-xs leading-relaxed">
@@ -96,46 +93,58 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <i className="fa-solid fa-phone text-impulso-orange text-xs flex-shrink-0" />
-                <a
-                  href="tel:+51959679522"
-                  className="text-gray-400 text-xs hover:text-impulso-orange transition-colors duration-200"
-                >
+                <a href="tel:+51959679522" className="text-gray-400 text-xs hover:text-impulso-orange transition-colors duration-200">
                   +51 959 679 522
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <i className="fa-solid fa-user-tie text-impulso-orange text-xs flex-shrink-0" />
-                <a
-                  href="mailto:ymorales@gimpulso.pe"
-                  className="text-gray-400 text-xs hover:text-impulso-orange transition-colors duration-200"
-                >
+                <a href="mailto:ymorales@gimpulso.pe" className="text-gray-400 text-xs hover:text-impulso-orange transition-colors duration-200">
                   ymorales@gimpulso.pe
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <i className="fa-solid fa-headset text-impulso-orange text-xs flex-shrink-0" />
-                <a
-                  href="mailto:administracion@gimpulso.pe"
-                  className="text-gray-400 text-xs hover:text-impulso-orange transition-colors duration-200"
-                >
+                <a href="mailto:administracion@gimpulso.pe" className="text-gray-400 text-xs hover:text-impulso-orange transition-colors duration-200">
                   administracion@gimpulso.pe
                 </a>
               </li>
+              <li className="flex items-center gap-3">
+                <i className="fa-solid fa-clock text-impulso-orange text-xs flex-shrink-0" />
+                <span className="text-gray-400 text-xs">Lun – Vie: 9:00 am – 6:00 pm</span>
+              </li>
             </ul>
+
+            {/* Datos legales — ayudan a Google a verificar el negocio */}
+            <div className="mt-8 pt-6 border-t border-white/5 space-y-1.5">
+              <p className="font-outfit text-[9px] font-bold uppercase tracking-[4px] text-gray-600 mb-3">
+                Datos legales
+              </p>
+              <p className="text-[10px] text-gray-600 leading-relaxed">
+                <span className="text-gray-500">Razón social:</span> IMPULSO PROYECTISTAS E INGENIEROS S.A.C.
+              </p>
+              <p className="text-[10px] text-gray-600">
+                <span className="text-gray-500">RUC:</span> 20605257179
+              </p>
+              <p className="text-[10px] text-gray-600">
+                <span className="text-gray-500">Tipo:</span> Sociedad Anónima Cerrada
+              </p>
+              <p className="text-[10px] text-gray-600">
+                <span className="text-gray-500">Actividad:</span> Construcción de Edificios Completos
+              </p>
+            </div>
           </div>
 
-          {/* COL 3 — Redes + navegación */}
+          {/* COL 3 — Redes + acceso rápido */}
           <div className="py-14 md:pl-12">
             <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-8">
               Síguenos
             </span>
-
-            {/* Redes — cuadradas, sin border-radius */}
             <div className="flex gap-3 mb-10">
               {[
-                { red: "facebook-f",  href: "#" },
-                { red: "instagram",   href: "#" },
-                { red: "tiktok",      href: "#" },
+                { red: "facebook-f", href: "#" },
+                { red: "instagram",  href: "#" },
+                { red: "tiktok",     href: "#" },
               ].map(({ red, href }) => (
                 <a
                   key={red}
@@ -150,16 +159,17 @@ export default function Footer() {
               ))}
             </div>
 
-            {/* Links legales y acceso rápido */}
             <span className="font-outfit text-[10px] font-bold tracking-[5px] uppercase text-impulso-orange block mb-5">
               Acceso rápido
             </span>
             <ul className="space-y-3">
               {[
-                { label: "Ver proyectos",              to: "/#proyectos"           },
-                { label: "Nuestros servicios",         to: "/servicios"            },
-                { label: "Agenda una asesoría",        to: "/contacto"             },
-                { label: "Libro de Reclamaciones",     to: "/libro-reclamaciones"  },
+                { label: "Ver proyectos",          to: "/#proyectos"          },
+                { label: "Nuestros servicios",     to: "/servicios"           },
+                { label: "Obras en ejecución",     to: "/obra"                },
+                { label: "Principios del estudio", to: "/principios"          },
+                { label: "Agenda una asesoría",    to: "/contacto"            },
+                { label: "Libro de Reclamaciones", to: "/libro-reclamaciones" },
               ].map((item) => (
                 <li key={item.to}>
                   <Link
@@ -176,7 +186,7 @@ export default function Footer() {
 
         </div>
 
-        {/* ── AVISO LEGAL ───────────────────────────────────────────── */}
+        {/* ── AVISO LEGAL ─────────────────────────────────────────────── */}
         <div className="py-8 border-b border-white/8">
           <p className="text-[11px] text-gray-600 leading-relaxed text-justify">
             * Todas las imágenes fueron elaboradas con fines ilustrativos. Sus características y dimensiones son
@@ -184,18 +194,25 @@ export default function Footer() {
             No constituyen una representación exacta de la realidad.
           </p>
           <div className="flex gap-6 mt-4">
-            <Link to="/terminos-condiciones"  className="text-[11px] text-impulso-orange hover:underline transition-all">Términos y Condiciones</Link>
-            <Link to="/politicas-privacidad"  className="text-[11px] text-impulso-orange hover:underline transition-all">Políticas de Privacidad</Link>
+            <Link to="/terminos-condiciones" className="text-[11px] text-impulso-orange hover:underline transition-all">
+              Términos y Condiciones
+            </Link>
+            <Link to="/politicas-privacidad" className="text-[11px] text-impulso-orange hover:underline transition-all">
+              Políticas de Privacidad
+            </Link>
           </div>
         </div>
 
-        {/* ── PIE FINAL ─────────────────────────────────────────────── */}
-        <div className="py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-[11px] text-gray-600 text-center sm:text-left">
-            © 2026 Impulso Proyectistas e Ingenieros S.A.C. — Todos los derechos reservados.
-          </p>
-
-          {/* Botón TOP — móvil */}
+        {/* ── PIE FINAL ───────────────────────────────────────────────── */}
+        <div className="py-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+          <div className="text-center sm:text-left space-y-1">
+            <p className="text-[11px] text-gray-600">
+              © 2026 Impulso Proyectistas e Ingenieros S.A.C. — Todos los derechos reservados.
+            </p>
+            <p className="text-[10px] text-gray-700">
+              RUC 20605257179 · Independencia, Huaraz, Ancash, Perú
+            </p>
+          </div>
           <button
             onClick={scrollToTop}
             className="sm:hidden w-9 h-9 border border-white/10 text-gray-500 flex items-center justify-center hover:border-impulso-orange hover:text-impulso-orange transition-all cursor-pointer"
